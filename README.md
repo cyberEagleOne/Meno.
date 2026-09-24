@@ -148,17 +148,17 @@ The use and distribution of Scripture text will follow the applicable copyright 
 
 ---
 
-## 🛠️ Technology
+## 🛠️ Technology Stack
 
-The final technology stack will be determined during development.
-
-Planned technologies may include:
-
-* Android
-* Mobile development framework / programming language
-* Local database or persistent storage
-* Local notification system
-* Git & GitHub
+* **Platform**: Native Android
+* **Language**: Kotlin
+* **UI Framework**: Jetpack Compose + Material 3
+* **Navigation**: Navigation Compose
+* **Local Database**: Room
+* **Preferences**: DataStore
+* **Background Tasks**: WorkManager
+* **Async Operations**: Kotlin Coroutines + Flow
+* **Build System**: Gradle (Version Catalog `libs.versions.toml`)
 
 ---
 
@@ -178,24 +178,20 @@ MENO is being developed as an individual academic project over a **12-meeting de
 
 ### Phase 2 — Design & Build
 
-* UI structure
-* Navigation
-* Onboarding
-* Reading journey
-* Scripture reading flow
-* Reading completion
-* Local data storage
-* Basic gamification
+* UI structure & Design System (Meno Theme)
+* Navigation graph & placeholder screens
+* Layered Architecture (Domain, Data, Presentation)
+* Scripture asset provider setup
+* Local data storage foundation (Room & DataStore)
+* Reading reminder notification worker foundation
 
 ### Phase 3 — Implement & Test
 
-* XP system
-* Reading streak
-* Progress tracking
-* Reading reminders
-* Error and empty states
-* Functional testing
-* UI refinement
+* XP system & Streak calculations
+* Scripture JSON parser & reading plan population
+* Progress tracking integration
+* Reading reminders scheduling
+* Functional testing & UI refinement
 
 ### Phase 4 — Finalize
 
@@ -213,22 +209,23 @@ MENO is being developed as an individual academic project over a **12-meeting de
 **Current Status: 🟡 In Development**
 
 ### Week 1
-
 * Problem identified
 * Target users defined
 * Application concept defined
 * Core features identified
 * Project scope defined
 * Main user flow planned
-* Flowcharts created
+
+### Week 2
+* Created initial Android project structure & 3-layer local-first architecture (Domain, Data, Presentation)
+* Configured Meno design system tokens (Colors, Typography, Shapes, Theme) in Jetpack Compose
+* Implemented Navigation Compose graph with placeholder screen structures (Onboarding, Home, Journey, Reading, Completion, Progress, Profile)
+* Created Room database entities/DAOs, DataStore preferences, Repository contracts, and WorkManager notification worker foundation
 
 ### Next Steps
-
-* Screen structure
-* UI/UX planning
-* Navigation structure
-* Wireframe / prototype
-* Initial application setup
+* Integrate ILT3 Scripture dataset JSON
+* Implement Room database persistence & reading plan data
+* Wire up XP calculation, streak logic, and WorkManager reminder scheduling
 
 ---
 
