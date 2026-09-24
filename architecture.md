@@ -1,551 +1,671 @@
-# Meno — Technical Architecture
+# Meno — Application Architecture
 
-## 1. Overview
-
-Meno is a native Android application designed to help users build a consistent Bible reading habit through guided reading journeys, daily reading, reminders, and lightweight gamification.
-
-The MVP follows a **local-first architecture**.
-
-The application does not require a backend server, user account, or cloud database for the core experience.
+> **Meno — Read. Remain. Grow.**
+>
+> Technical architecture for the Meno Android MVP.
 
 ---
 
-# 2. MVP Architecture Goals
+## 1. Architecture Overview
 
-The architecture should support the following core experience:
+Meno is a native Android application designed to help users build a consistent Bible reading habit through guided reading journeys and lightweight gamification.
+
+The MVP uses a **local-first architecture**, meaning the core application functionality works without requiring a backend, account, or internet connection.
+
+The architecture is designed to be:
+
+- Simple enough for the MVP development timeline
+- Easy to understand and maintain
+- Separated into clear responsibilities
+- Testable
+- Offline-capable
+- Reusable
+- Extensible for future development
+
+### Core Architecture
 
 ```text
-Choose a Journey
-       ↓
-Read
-       ↓
-Complete
-       ↓
-Earn XP
-       ↓
-Maintain Streak
-       ↓
-Track Progress
-       ↓
-Continue
+┌─────────────────────────────────────┐
+│           Presentation              │
+│                                     │
+│  Jetpack Compose                    │
+│  Screens                            │
+│  Components                         │
+│  ViewModels                         │
+└──────────────────┬──────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────┐
+│              Domain                 │
+│                                     │
+│  Business Models                    │
+│  Use Cases                          │
+│  Repository Interfaces              │
+│  Business Rules                     │
+└──────────────────┬──────────────────┘
+                   │
+                   ▼
+┌─────────────────────────────────────┐
+│               Data                  │
+│                                     │
+│  Repository Implementations         │
+│  Room Database                      │
+│  DataStore                          │
+│  Scripture Provider                 │
+│  Local Assets                       │
+└─────────────────────────────────────┘
+````
+
+---
+
+## 2. Architecture Goals
+
+The architecture follows these main goals:
+
+1. Keep the MVP simple enough to implement within the course timeline.
+2. Separate UI, business logic, and data management.
+3. Make the application work offline.
+4. Avoid unnecessary backend infrastructure.
+5. Make features easy to test and modify.
+6. Keep the codebase understandable for a student development team.
+7. Allow future expansion without requiring a complete rewrite.
+
+---
+
+## 3. Technology Stack
+
+| Area              | Technology                      |
+| ----------------- | ------------------------------- |
+| Platform          | Android                         |
+| Language          | Kotlin                          |
+| UI                | Jetpack Compose                 |
+| Design System     | Material 3 + Meno Design System |
+| Architecture      | Layered Architecture            |
+| State Management  | StateFlow                       |
+| Navigation        | Navigation Compose              |
+| Local Database    | Room                            |
+| Preferences       | DataStore                       |
+| Async Operations  | Kotlin Coroutines               |
+| Background Tasks  | WorkManager                     |
+| Notifications     | Android Notifications           |
+| Scripture Storage | Local JSON / bundled assets     |
+| Build System      | Gradle                          |
+| Version Control   | Git + GitHub                    |
+
+The MVP intentionally avoids:
+
+* Backend servers
+* User authentication
+* Cloud databases
+* Cloud synchronization
+* Social APIs
+* Online leaderboards
+
+---
+
+## 4. Application Architecture
+
+Meno follows a three-layer architecture:
+
+```text
+Presentation
+     │
+     ▼
+Domain
+     │
+     ▼
+Data
 ```
 
-The architecture prioritizes:
+### Presentation
 
-1. Simplicity
-2. Reliability
-3. Maintainability
-4. Clear separation of responsibilities
-5. Offline-first functionality
-6. Easy future expansion
+Responsible for:
 
----
+* Displaying UI
+* Handling user interaction
+* Collecting UI state
+* Calling ViewModels
 
-# 3. Technology Stack
+### Domain
 
-## Programming Language
+Responsible for:
 
-**Kotlin**
+* Application rules
+* Use cases
+* Business logic
+* Domain models
+* Repository contracts
 
-Kotlin is the primary programming language for the Android application.
+### Data
 
----
+Responsible for:
 
-## UI Framework
-
-**Jetpack Compose**
-
-Jetpack Compose is used to build the application's user interface.
-
-It allows Meno's design system to be implemented through reusable UI components.
-
----
-
-## UI Foundation
-
-**Material 3**
-
-Material 3 provides foundational UI components and theming.
-
-Meno will customize Material 3 through its own:
-
-* Colors
-* Typography
-* Shapes
-* Spacing
-* Components
-
-The application should not rely on the default Material 3 appearance.
+* Persistent storage
+* Scripture data
+* Room database
+* DataStore
+* Repository implementations
 
 ---
 
-## Architecture Pattern
+## 5. Presentation Layer
 
-**MVVM (Model–View–ViewModel)**
+The presentation layer uses **Jetpack Compose**.
 
-MVVM is used to separate UI presentation from application state and logic.
+Main responsibilities:
 
----
+* Render screens
+* Display application state
+* Receive user interactions
+* Trigger ViewModel actions
+* Navigate between screens
 
-## Navigation
+The UI should not directly access:
 
-**Navigation Compose**
+* Room DAOs
+* DataStore
+* JSON files
+* Repository implementations
 
-Used to manage navigation between Compose screens.
-
----
-
-## Local Database
-
-**Room**
-
-Room is used for structured application data that changes during user activity.
-
-Examples:
-
-* XP
-* Streak
-* Reading progress
-* Completed chapters
-* Journey progress
-
----
-
-## Preferences
-
-**DataStore**
-
-DataStore is used for small preference and configuration values.
-
-Examples:
-
-* Onboarding completion
-* Reminder settings
-* Selected preferences
-* User configuration
-
----
-
-## Asynchronous Programming
-
-**Kotlin Coroutines**
-
-Coroutines are used for asynchronous operations such as database access and other background work.
-
----
-
-## Reactive Data
-
-**Kotlin Flow**
-
-Flow is used to observe changing application data and provide updated state to the UI.
-
-Examples:
+Instead:
 
 ```text
-XP changes
-    ↓
-Flow
+Composable
     ↓
 ViewModel
     ↓
-UI updates
+Use Case
+    ↓
+Repository
+    ↓
+Data Source
 ```
 
 ---
 
-## Notifications
+## 6. ViewModel Architecture
 
-**WorkManager + Android Notification APIs**
-
-WorkManager is used to schedule reminder-related background work.
-
-The MVP uses local notifications and does not require a notification backend.
-
----
-
-## Scripture Data
-
-**Local bundled Scripture data**
-
-ILT3.Yes Scripture content is stored locally within the application.
-
-The Scripture content is separated from user-generated application data.
-
-A dedicated Scripture data layer is used so that the UI does not directly depend on the raw Scripture file format.
-
----
-
-## Testing
-
-Recommended testing tools:
-
-* JUnit
-* Compose UI testing
-* Android testing framework
-
-Testing priority should focus on critical MVP functionality.
-
----
-
-## Version Control
-
-**Git + GitHub**
-
-Git is used for source control and GitHub is used as the project's remote repository.
-
----
-
-# 4. Architecture Overview
-
-Meno follows a layered architecture:
-
-```text
-┌─────────────────────────────┐
-│        Presentation         │
-│                             │
-│ Compose UI + ViewModels     │
-└──────────────┬──────────────┘
-               │
-               ↓
-┌─────────────────────────────┐
-│           Domain            │
-│                             │
-│ Reading / XP / Streak Logic │
-└──────────────┬──────────────┘
-               │
-               ↓
-┌─────────────────────────────┐
-│            Data             │
-│                             │
-│ Repositories + Local Data   │
-└──────────────┬──────────────┘
-               │
-        ┌──────┴──────┐
-        ↓             ↓
-      Room       Scripture Data
-        │
-        ↓
-    DataStore
-```
-
-The purpose of this separation is to prevent UI code from directly managing storage or complex application logic.
-
----
-
-# 5. Presentation Layer
-
-The presentation layer contains everything directly related to what the user sees and interacts with.
-
-Main technologies:
-
-* Jetpack Compose
-* ViewModel
-* Navigation Compose
-
-Example screens:
-
-```text
-OnboardingScreen
-HomeScreen
-JourneyScreen
-ReadingScreen
-CompletionScreen
-ProgressScreen
-ProfileScreen
-```
-
-The UI should primarily:
-
-* Display state
-* Receive user interactions
-* Trigger actions
-* Navigate between screens
-
-Business logic should not be placed directly inside Compose UI components.
-
----
-
-# 6. ViewModel
-
-Each major feature may have a ViewModel responsible for managing UI state and coordinating application logic.
+Each major screen can have its own ViewModel when state management becomes complex.
 
 Example:
 
 ```text
-ReadingScreen
-      ↓
+HomeViewModel
+JourneyViewModel
 ReadingViewModel
-      ↓
+ProgressViewModel
+ProfileViewModel
+```
+
+ViewModels are responsible for:
+
+* Loading data
+* Calling use cases
+* Managing UI state
+* Handling user actions
+* Exposing StateFlow
+
+Example conceptual flow:
+
+```text
+HomeScreen
+     │
+     ▼
+HomeViewModel
+     │
+     ▼
+GetTodaysReadingUseCase
+     │
+     ▼
 ReadingRepository
 ```
 
-The ViewModel may manage:
+Business logic should not be placed directly inside Composable functions.
 
-* Current chapter
-* Current reading state
-* Completion state
-* Loading state
-* Error state
+---
 
-For example:
+## 7. UI State
+
+Each screen should expose a clear UI state.
+
+Example:
+
+```kotlin
+data class HomeUiState(
+    val isLoading: Boolean = false,
+    val todaysReading: Reading? = null,
+    val currentStreak: Int = 0,
+    val totalXp: Int = 0,
+    val errorMessage: String? = null
+)
+```
+
+Possible states include:
 
 ```text
-User taps "Complete Reading"
-            ↓
-ReadingViewModel
-            ↓
-Complete reading
-            ↓
-Update XP
-            ↓
-Update streak
-            ↓
-Save progress
-            ↓
-UI displays completion
+Loading
+Success
+Empty
+Error
+```
+
+This keeps UI behavior predictable and easier to test.
+
+---
+
+## 8. Domain Layer
+
+The domain layer contains the application's core logic.
+
+It should not depend directly on:
+
+* Jetpack Compose
+* Android UI components
+* Room implementation
+* DataStore implementation
+
+The domain layer contains:
+
+```text
+Domain
+├── model
+├── repository
+└── usecase
+```
+
+Example:
+
+```text
+domain/
+├── model/
+│   ├── Reading.kt
+│   ├── Journey.kt
+│   ├── UserProgress.kt
+│   └── ReadingProgress.kt
+│
+├── repository/
+│   ├── ScriptureRepository.kt
+│   ├── ReadingRepository.kt
+│   ├── JourneyRepository.kt
+│   ├── ProgressRepository.kt
+│   └── SettingsRepository.kt
+│
+└── usecase/
+    ├── GetTodaysReadingUseCase.kt
+    ├── CompleteReadingUseCase.kt
+    ├── GetJourneyProgressUseCase.kt
+    ├── CalculateXpUseCase.kt
+    └── UpdateStreakUseCase.kt
 ```
 
 ---
 
-# 7. Domain Layer
+## 9. Use Cases
 
-The domain layer contains the application's core rules and logic.
+Use cases represent specific actions or operations within Meno.
 
-Important domain concepts include:
+Initial MVP use cases:
 
 ### Reading
 
-Determines:
+```text
+GetTodaysReadingUseCase
+GetReadingUseCase
+CompleteReadingUseCase
+```
 
-* What chapter the user should read
-* Whether a chapter is complete
-* What reading comes next
+### Journey
 
-### XP
-
-Determines:
-
-* XP awarded for completion
-* Current XP
-* XP-related progress
-
-### Streak
-
-Determines:
-
-* Current streak
-* Whether today's reading continues the streak
-* When a streak should be updated
+```text
+GetJourneyUseCase
+GetJourneyProgressUseCase
+```
 
 ### Progress
 
-Determines:
+```text
+GetReadingProgressUseCase
+GetUserProgressUseCase
+CalculateXpUseCase
+UpdateStreakUseCase
+```
 
-* Completed chapters
-* Journey progress
-* Current reading position
+### Reminder
 
-The domain layer should not depend directly on Compose UI.
+```text
+GetReminderSettingsUseCase
+SaveReminderSettingsUseCase
+```
+
+Use cases should represent meaningful application behavior rather than simply duplicating database operations.
 
 ---
 
-# 8. Data Layer
+## 10. Data Layer
 
-The data layer manages access to application data.
+The data layer manages persistent and local data.
 
 Main components:
 
 ```text
-Repositories
-    ↓
-Local Data Sources
-    ↓
-Room / DataStore / Scripture Files
+Data
+├── local
+│   ├── room
+│   └── datastore
+│
+├── scripture
+│   └── local assets
+│
+├── repository
+│
+└── mapper
 ```
 
-Repositories provide a clean interface between the rest of the application and the underlying storage.
+The data layer implements the repository interfaces defined in the domain layer.
 
 ---
 
-# 9. Scripture Architecture
+## 11. Room Database
 
-Scripture is treated as application content rather than user-generated data.
+Room is used for structured application data that needs to persist between sessions.
 
-Recommended structure:
+Room is appropriate for:
 
-```text
-data/
-└── scripture/
-    └── ilt3/
-        └── ilt3.json
-```
+* Reading progress
+* Journey progress
+* XP
+* Streak
+* Reading history
+* User progress
 
-The exact file organization may be adjusted depending on the final Scripture dataset.
-
-The application should access Scripture through a dedicated provider/repository.
-
-Example:
+### Main Entities
 
 ```text
-ReadingScreen
-      ↓
-ReadingViewModel
-      ↓
-ScriptureRepository
-      ↓
-ScriptureProvider
-      ↓
-ILT3 data
+UserProgressEntity
+ReadingProgressEntity
+JourneyProgressEntity
+ReadingHistoryEntity
 ```
 
-This prevents the Reading Screen from directly reading JSON files.
+### Example
+
+```kotlin
+@Entity(tableName = "user_progress")
+data class UserProgressEntity(
+    @PrimaryKey
+    val id: Int = 1,
+
+    val totalXp: Int,
+    val currentStreak: Int,
+    val longestStreak: Int,
+    val lastReadingDate: String?
+)
+```
+
+The exact implementation may change during development.
 
 ---
 
-# 10. Scripture Data Model
+## 12. DataStore
 
-The Scripture data should represent the hierarchy:
-
-```text
-Book
- ↓
-Chapter
- ↓
-Verse
-```
-
-Example conceptual structure:
-
-```text
-Genesis
- ├── Chapter 1
- │    ├── Verse 1
- │    ├── Verse 2
- │    └── Verse 3
- │
- └── Chapter 2
-      ├── Verse 1
-      └── Verse 2
-```
-
-The exact JSON structure will be determined after the final ILT3 dataset is prepared.
-
----
-
-# 11. User Data
-
-User-generated application data is stored separately from Scripture.
-
-Conceptually:
-
-```text
-User Data
-├── XP
-├── Streak
-├── Reading Progress
-├── Completed Chapters
-└── Journey Progress
-```
-
-This information is stored using Room where structured persistence is required.
-
----
-
-# 12. Room Database
-
-Room is responsible for persistent structured data.
-
-Possible entities:
-
-```text
-UserProgress
-ReadingProgress
-JourneyProgress
-ReadingHistory
-```
-
-The exact entities should remain minimal for the MVP.
-
-Do not create database tables for features that are not yet implemented.
-
----
-
-# 13. DataStore
-
-DataStore is used for simple preferences.
-
-Possible values:
-
-```text
-onboardingCompleted
-selectedJourney
-reminderEnabled
-reminderTime
-```
-
-DataStore should not be used as the primary database for complex relational data.
-
----
-
-# 14. Repository Pattern
-
-Repositories provide a single access point for application data.
+DataStore is used for lightweight preferences and settings.
 
 Examples:
 
 ```text
-ScriptureRepository
-ReadingRepository
-ProgressRepository
-SettingsRepository
+onboardingCompleted
+selectedJourneyId
+reminderEnabled
+reminderTime
 ```
+
+DataStore should not be used for large structured datasets.
+
+The separation is:
+
+```text
+Room
+→ structured persistent application data
+
+DataStore
+→ lightweight preferences/settings
+```
+
+---
+
+## 13. Repository Pattern
+
+Repositories provide an abstraction between the domain layer and the data layer.
+
+Example:
+
+```text
+UI
+ ↓
+ViewModel
+ ↓
+Use Case
+ ↓
+Repository Interface
+ ↓
+Repository Implementation
+ ↓
+Room / DataStore / Local Asset
+```
+
+Example:
+
+```kotlin
+interface ProgressRepository {
+    suspend fun getUserProgress(): UserProgress
+    suspend fun updateUserProgress(progress: UserProgress)
+}
+```
+
+The implementation may use Room internally without exposing Room details to the domain layer.
+
+---
+
+## 14. Scripture Architecture
+
+Scripture content is bundled locally with the application.
+
+The MVP does not require an online Scripture API.
+
+Example asset structure:
+
+```text
+app/
+└── src/
+    └── main/
+        └── assets/
+            └── scripture/
+                └── ilt3/
+                    └── ilt3.json
+```
+
+The application loads Scripture content from the local asset.
+
+Basic hierarchy:
+
+```text
+Bible
+ └── Book
+      └── Chapter
+           └── Verse
+```
+
+The Scripture provider is responsible for reading and parsing the local Scripture data.
+
+---
+
+## 15. Scripture Data Model
+
+A simplified Scripture model can be represented as:
+
+```text
+Book
+├── id
+├── name
+└── chapters
+
+Chapter
+├── number
+└── verses
+
+Verse
+├── number
+└── text
+```
+
+Reading selections should reference Scripture using structured identifiers rather than storing large amounts of Scripture text in progress tables.
 
 For example:
 
 ```text
-ReadingViewModel
-       ↓
-ReadingRepository
-       ↓
-ScriptureRepository + ProgressRepository
-       ↓
-Local Data
+Book: John
+Chapter: 1
+Start Verse: 1
+End Verse: 18
 ```
-
-This makes the application easier to change later.
 
 ---
 
-# 15. Reading Completion Flow
+## 16. Reading Architecture
+
+A reading represents one unit of the user's guided reading plan.
+
+Example:
+
+```text
+Reading
+├── id
+├── journeyId
+├── book
+├── chapter
+├── startVerse
+├── endVerse
+└── order
+```
+
+Example:
+
+```text
+Reading #1
+Journey: Gospel Starter
+Book: John
+Chapter: 1
+Verses: 1–18
+Order: 1
+```
+
+The Reading model connects the journey structure with the Scripture provider.
+
+---
+
+## 17. Journey Architecture
+
+A journey is a structured collection of readings.
+
+Example:
+
+```text
+Journey
+├── id
+├── name
+├── description
+└── readings
+```
+
+Example journey:
+
+```text
+Gospel Starter
+│
+├── Reading 1
+├── Reading 2
+├── Reading 3
+├── Reading 4
+└── ...
+```
+
+Journey data can initially be bundled locally because the MVP does not require a backend.
+
+---
+
+## 18. Progress Architecture
+
+Meno separates progress into three main concepts:
+
+### User Progress
+
+Tracks overall user activity.
+
+```text
+User Progress
+├── total XP
+├── current streak
+├── longest streak
+└── last reading date
+```
+
+### Journey Progress
+
+Tracks progress within a selected journey.
+
+```text
+Journey Progress
+├── journey ID
+├── completed readings
+└── progress percentage
+```
+
+### Reading Progress
+
+Tracks whether an individual reading has been completed.
+
+```text
+Reading Progress
+├── reading ID
+├── completed
+└── completedAt
+```
+
+This separation makes progress easier to calculate and display.
+
+---
+
+## 19. Reading Completion Flow
 
 When a user completes a reading:
 
 ```text
-User taps COMPLETE
-        ↓
-ReadingViewModel
-        ↓
-Validate reading
-        ↓
-Mark chapter complete
-        ↓
-Award XP
-        ↓
-Update streak
-        ↓
-Update progress
-        ↓
-Save data
-        ↓
-Show Completion Screen
+User taps "Complete"
+        │
+        ▼
+CompleteReadingUseCase
+        │
+        ├── Check if already completed
+        │
+        ├── Mark reading completed
+        │
+        ├── Calculate XP
+        │
+        ├── Update streak
+        │
+        ├── Update journey progress
+        │
+        └── Persist changes
+        │
+        ▼
+CompletionScreen
 ```
 
-The completion action should be treated as one logical application operation.
+The completion process should avoid awarding XP multiple times for the same reading.
 
 ---
 
-# 16. XP System
+## 20. XP System
 
 The MVP uses a simple XP system.
 
@@ -553,501 +673,659 @@ Example:
 
 ```text
 Complete reading
-       ↓
-   +10 XP
+        ↓
+      +10 XP
 ```
 
-The exact XP values can be adjusted during implementation.
+The exact XP value can be adjusted later.
 
-XP should be stored persistently so it remains available when the application is reopened.
+The MVP should avoid overly complex mechanics such as:
+
+* XP multipliers
+* Skill trees
+* Energy systems
+* Hearts
+* Complex reward economies
+
+The goal is to encourage consistency rather than create unnecessary complexity.
 
 ---
 
-# 17. Streak System
+## 21. Streak System
 
-The streak system is designed to encourage consistency.
+The streak system measures consecutive reading days.
 
-Basic concept:
+Basic logic:
 
 ```text
 Read today
-    ↓
-Continue streak
-
-Read again tomorrow
-    ↓
-Streak +1
+    │
+    ├── Yesterday was a reading day
+    │       ↓
+    │   Increase streak
+    │
+    └── Otherwise
+            ↓
+        Start streak
 ```
 
-The application should store enough information to determine the user's last completed reading date.
+The MVP does not require:
 
-The MVP should avoid overly complex streak recovery mechanics.
+* Streak freezes
+* Streak recovery
+* Complex grace periods
+* Social streak comparison
+
+A basic consecutive-day implementation is sufficient.
 
 ---
 
-# 18. Reading Progress
+## 22. Navigation Architecture
 
-Reading progress tracks where the user is within their selected journey.
+Navigation Compose manages movement between major screens.
 
-Conceptually:
-
-```text
-Journey
-  ↓
-Chapter
-  ↓
-Completed?
-```
-
-Example:
+Main routes:
 
 ```text
-Beginner Journey
-
-Genesis 1   ✓
-Genesis 2   ✓
-Genesis 3   → Current
-Genesis 4   🔒
+onboarding
+home
+journey/{journeyId}
+reading/{readingId}
+completion
+progress
+profile
 ```
 
----
-
-# 19. Navigation Architecture
-
-Navigation is handled through Navigation Compose.
-
-Conceptual navigation graph:
+Conceptual navigation:
 
 ```text
 Onboarding
-    ↓
+    │
+    ▼
 Home
-    ↓
-Journey
-    ↓
-Reading
-    ↓
-Completion
-    ↓
-Home
+    │
+    ├── Journey
+    │     │
+    │     ▼
+    │   Reading
+    │     │
+    │     ▼
+    │   Completion
+    │
+    ├── Progress
+    │
+    └── Profile
 ```
 
-The next-day flow:
+Navigation arguments should use stable identifiers such as:
 
 ```text
-Notification
-     ↓
-Open Meno
-     ↓
-Home
-     ↓
-Today's Reading
-     ↓
-Reading
-     ↓
-Completion
-     ↓
-Home
+journeyId
+readingId
 ```
+
+rather than passing large objects between screens.
 
 ---
 
-# 20. Notification Architecture
+## 23. Reminder Architecture
 
-Meno uses local scheduled notifications.
+Meno uses local Android notifications for reading reminders.
 
-Basic flow:
+Flow:
 
 ```text
-User enables reminder
-        ↓
-Select reminder time
-        ↓
-Schedule local work
-        ↓
+User changes reminder settings
+        │
+        ▼
+SaveReminderSettingsUseCase
+        │
+        ▼
+DataStore
+        │
+        ▼
 WorkManager
-        ↓
+        │
+        ▼
 Android Notification
-        ↓
-User opens Meno
 ```
 
-No backend push notification service is required for the MVP.
+The reminder system should support:
+
+* Enable / disable reminder
+* Select reminder time
+* Schedule local reminder
+
+The MVP does not require a remote notification service.
 
 ---
 
-# 21. Dependency Management
+## 24. Offline Architecture
 
-The MVP should avoid unnecessary dependency injection complexity.
+Meno is designed as an offline-first application.
 
-Manual dependency management is acceptable during the initial implementation.
+The following should work without an internet connection:
 
-A dependency injection framework such as Hilt can be introduced later if the project becomes large enough to justify it.
+* Opening the application
+* Viewing the current journey
+* Reading Scripture
+* Completing readings
+* Updating XP
+* Updating streak
+* Viewing progress
+* Managing reminder settings
 
-The goal is to keep the initial implementation understandable.
+Because Scripture content and core application data are local, the MVP does not depend on network availability.
 
 ---
 
-# 22. Project Structure
+## 25. Project Structure
 
-Recommended initial project structure:
+Recommended Android project structure:
 
 ```text
 app/
 └── src/
     └── main/
         ├── java/
-        │   └── com/
-        │       └── meno/
-        │           ├── data/
-        │           │   ├── local/
-        │           │   ├── scripture/
-        │           │   └── repository/
-        │           │
-        │           ├── domain/
-        │           │   ├── model/
-        │           │   └── usecase/
-        │           │
-        │           ├── ui/
-        │           │   ├── onboarding/
-        │           │   ├── home/
-        │           │   ├── journey/
-        │           │   ├── reading/
-        │           │   ├── completion/
-        │           │   └── progress/
-        │           │
-        │           ├── navigation/
-        │           │
-        │           └── MainActivity.kt
+        │   └── com.meno.app/
+        │       │
+        │       ├── data/
+        │       │   ├── local/
+        │       │   │   ├── room/
+        │       │   │   └── datastore/
+        │       │   │
+        │       │   ├── repository/
+        │       │   ├── scripture/
+        │       │   └── mapper/
+        │       │
+        │       ├── domain/
+        │       │   ├── model/
+        │       │   ├── repository/
+        │       │   └── usecase/
+        │       │
+        │       ├── ui/
+        │       │   ├── components/
+        │       │   ├── theme/
+        │       │   ├── onboarding/
+        │       │   ├── home/
+        │       │   ├── journey/
+        │       │   ├── reading/
+        │       │   ├── completion/
+        │       │   ├── progress/
+        │       │   └── profile/
+        │       │
+        │       ├── navigation/
+        │       │
+        │       ├── reminder/
+        │       │
+        │       └── MainActivity.kt
         │
         └── assets/
             └── scripture/
                 └── ilt3/
+                    └── ilt3.json
 ```
 
-The exact package names may be adjusted when the Android project is initialized.
+The structure may be simplified during early development if some packages are not yet needed.
 
 ---
 
-# 23. MVP Feature Mapping
+## 26. Dependency Rules
 
-| Feature            | Main Technology                |
-| ------------------ | ------------------------------ |
-| Onboarding         | Jetpack Compose + DataStore    |
-| Journey Selection  | Compose + ViewModel            |
-| Home               | Compose + ViewModel            |
-| Scripture Reading  | Compose + Scripture Repository |
-| ILT3 Content       | Local bundled data             |
-| Reading Completion | ViewModel + Repository         |
-| XP                 | Room                           |
-| Streak             | Room                           |
-| Reading Progress   | Room                           |
-| Journey Progress   | Room                           |
-| Reminder Settings  | DataStore                      |
-| Daily Reminder     | WorkManager + Notifications    |
-| Navigation         | Navigation Compose             |
-
----
-
-# 24. Backend Decision
-
-## MVP
-
-**No backend.**
-
-Meno does not currently require:
-
-* User accounts
-* Cloud synchronization
-* Online authentication
-* Server-side XP
-* Social features
-* Leaderboards
-* Cloud database
-
-The MVP can operate using local storage.
+The following dependency rules should be maintained:
 
 ```text
-                  MENO
-                   │
-          ┌────────┴────────┐
-          ↓                 ↓
-   Scripture Data       User Data
-     Local                Local
-      JSON             Room/DataStore
+Presentation
+     ↓
+Domain
+     ↓
+Data
 ```
 
-This reduces development complexity and allows the core experience to be completed within the project timeline.
+### Presentation can depend on:
+
+* Domain models
+* Domain use cases
+* UI components
+* Navigation
+
+### Domain can depend on:
+
+* Domain models
+* Repository interfaces
+* Use cases
+
+### Data can depend on:
+
+* Domain repository interfaces
+* Domain models
+* Room
+* DataStore
+* Android APIs
+* Local assets
+
+### Presentation should NOT directly access:
+
+```text
+Room
+DataStore
+JSON files
+Repository implementations
+```
+
+This prevents the UI from becoming tightly coupled to implementation details.
 
 ---
 
-# 25. Future Backend Possibility
+## 27. MVP Feature Mapping
 
-A backend may be considered in a future version if Meno introduces:
-
-* User accounts
-* Cloud synchronization
-* Multiple devices
-* Online statistics
-* Social features
-* Leaderboards
-* Remote content management
-
-If this happens, the repository architecture allows the data source to be changed without completely rewriting the UI.
+| Feature            | Main Architecture            |
+| ------------------ | ---------------------------- |
+| Onboarding         | Compose + DataStore          |
+| Reading Journey    | Compose + Journey Repository |
+| Daily Reading      | Compose + Reading Repository |
+| Scripture Reader   | Compose + Scripture Provider |
+| Reading Completion | Use Case + Room              |
+| XP                 | Progress Repository          |
+| Streak             | Progress Repository          |
+| Progress Tracking  | Room + ViewModel             |
+| Reminders          | DataStore + WorkManager      |
+| Mascot             | Compose UI                   |
+| Local Scripture    | Assets                       |
+| Offline Usage      | Local-first architecture     |
 
 ---
 
-# 26. Development Strategy
+## 28. Error Handling
 
-Development should follow the user experience rather than building every technical layer first.
+The MVP should provide basic error handling for common cases.
 
-Recommended order:
-
-### Phase 1 — Project Setup
-
-* Create Android project
-* Configure Kotlin
-* Configure Jetpack Compose
-* Configure Material 3
-* Implement Meno theme
-* Connect design system
-
-### Phase 2 — Static UI
-
-Build:
+Examples:
 
 ```text
-Onboarding
-Home
-Journey
-Reading
-Completion
+Scripture failed to load
+        ↓
+Show readable error state
+        ↓
+Allow retry
 ```
 
-using the approved Stitch prototype and `design.md`.
+Possible error states:
 
-### Phase 3 — Navigation
+* Scripture unavailable
+* Reading not found
+* Journey not found
+* Database operation failed
+* Invalid navigation ID
 
-Connect:
+Errors should not cause the application to crash when they can be handled gracefully.
+
+---
+
+## 29. Loading and Empty States
+
+Screens that load persistent or local data should support appropriate states.
+
+### Loading
 
 ```text
-Onboarding
- ↓
-Home
- ↓
-Journey
- ↓
-Reading
- ↓
-Completion
+Loading
+  ↓
+Display progress indicator
 ```
 
-### Phase 4 — Scripture
+### Success
 
-Add:
+```text
+Data available
+  ↓
+Display content
+```
 
-* ILT3 data
-* Scripture model
-* Scripture provider
-* Scripture repository
-* Reading screen integration
+### Empty
 
-### Phase 5 — User Progress
+```text
+No data
+  ↓
+Display helpful empty state
+```
 
-Implement:
+### Error
 
-* XP
-* Streak
+```text
+Error
+  ↓
+Display message
+  ↓
+Retry
+```
+
+The UI should avoid exposing technical error messages directly to users.
+
+---
+
+## 30. Testing Strategy
+
+The MVP should use a practical testing strategy rather than attempting exhaustive coverage.
+
+### Unit Tests
+
+Focus on:
+
+* XP calculation
+* Streak calculation
 * Reading completion
 * Journey progress
-* Persistent local storage
+* Data mapping
+* Use cases
 
-### Phase 6 — Reminder
-
-Implement:
-
-* Reminder settings
-* Scheduled notifications
-* Daily reading reminder
-
-### Phase 7 — Testing
-
-Test the complete main flow:
+Example:
 
 ```text
-Open Meno
- ↓
-Onboarding
- ↓
-Choose Journey
- ↓
-Home
- ↓
-Today's Reading
- ↓
-Read
- ↓
-Complete
- ↓
-XP + Streak + Progress
- ↓
-Close App
- ↓
-Reopen App
- ↓
-Data remains
+Given:
+Reading is not completed
+
+When:
+CompleteReadingUseCase is executed
+
+Then:
+Reading becomes completed
+XP increases
+Journey progress updates
+```
+
+### UI Tests
+
+Important flows:
+
+```text
+Onboarding → Home
+Home → Reading
+Reading → Completion
+Completion → Home
+Home → Progress
+Profile → Reminder Settings
 ```
 
 ---
 
-# 27. MVP Success Criteria
+## 31. Development Strategy
 
-The Meno MVP is considered successful when:
+Development should be incremental.
+
+### Phase 1 — Foundation
+
+Implement:
+
+* Android project
+* Compose
+* Theme
+* Navigation
+* Basic project structure
+
+### Phase 2 — Core Reading
+
+Implement:
+
+* Scripture provider
+* Journey data
+* Reading screen
+* Completion flow
+
+### Phase 3 — Progress
+
+Implement:
+
+* Room
+* XP
+* Streak
+* Journey progress
+* Progress screen
+
+### Phase 4 — Engagement
+
+Implement:
+
+* Mascot
+* Animations
+* Completion feedback
+* Reminder system
+
+### Phase 5 — Polish
+
+Implement:
+
+* Error states
+* Loading states
+* Accessibility improvements
+* UI consistency
+* Testing
+* Bug fixing
+
+---
+
+## 32. Git Workflow
+
+The project uses Git and GitHub for version control.
+
+Recommended branch structure:
+
+```text
+main
+│
+├── feature/onboarding
+├── feature/reading
+├── feature/progress
+├── feature/reminder
+└── feature/ui-polish
+```
+
+Commits should be small and descriptive.
+
+Examples:
+
+```text
+feat: add onboarding flow
+feat: add scripture reader
+feat: implement reading completion
+feat: add XP tracking
+feat: add streak calculation
+feat: add reminder scheduling
+fix: prevent duplicate XP rewards
+style: refine reading screen UI
+docs: update architecture documentation
+```
+
+---
+
+## 33. Future Expansion
+
+The architecture intentionally leaves room for future features.
+
+Possible future additions:
+
+### Authentication
+
+```text
+Authentication
+     ↓
+User Account
+```
+
+### Cloud Sync
+
+```text
+Local Database
+      ↕
+Cloud Backend
+```
+
+### Social Features
+
+```text
+Friends
+Leaderboards
+Shared Progress
+```
+
+### Additional Scripture Features
+
+```text
+Multiple translations
+Bookmarks
+Highlights
+Notes
+Search
+Audio
+```
+
+### Advanced Analytics
+
+```text
+Reading statistics
+Weekly activity
+Monthly activity
+Completion trends
+```
+
+These features are outside the MVP scope.
+
+---
+
+## 34. MVP Scope
+
+The MVP focuses on one clear problem:
+
+> Helping users build a consistent Bible reading habit.
+
+### Included
+
+* Onboarding
+* Guided reading journey
+* Daily reading
+* Scripture reading
+* Reading completion
+* XP
+* Streak
+* Progress tracking
+* Local reminders
+* Mascot / visual feedback
+* Offline functionality
+* Local Scripture data
+
+### Not Included
+
+* Backend
+* Authentication
+* User accounts
+* Cloud synchronization
+* Social network
+* Leaderboards
+* AI assistant
+* Audio Bible
+* Online community
+* Advanced analytics
+* Multiple device synchronization
+* Complex reward economy
+
+Keeping these features outside the MVP prevents unnecessary architectural complexity.
+
+---
+
+## 35. Architecture Principles
+
+Meno follows several core principles.
+
+### 1. Keep It Simple
+
+Do not introduce infrastructure that is not required by the MVP.
+
+### 2. Local First
+
+Core functionality should remain available without an internet connection.
+
+### 3. Separation of Concerns
+
+UI, business logic, and data access should have clear responsibilities.
+
+### 4. Reusable Components
+
+Common UI and business functionality should be reusable.
+
+### 5. Testable Logic
+
+Important business rules should exist outside Composable functions.
+
+### 6. Progressive Complexity
+
+Only introduce more complex architecture when the feature actually requires it.
+
+### 7. Future-Friendly
+
+The MVP should allow future backend and synchronization features without forcing them into the initial implementation.
+
+---
+
+## 36. Architecture Summary
+
+The final Meno MVP architecture can be summarized as:
+
+```text
+                    ┌──────────────────┐
+                    │      Meno UI     │
+                    │  Jetpack Compose │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │    ViewModels    │
+                    │   StateFlow      │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │     Use Cases    │
+                    │     Domain       │
+                    └────────┬─────────┘
+                             │
+                             ▼
+                    ┌──────────────────┐
+                    │   Repositories   │
+                    └────────┬─────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+        ┌──────────┐   ┌───────────┐  ┌─────────────┐
+        │   Room   │   │ DataStore │  │  Scripture  │
+        │ Database │   │ Preferences│  │ Local Asset │
+        └──────────┘   └───────────┘  └─────────────┘
+```
 
 ### Core Flow
 
-The user can:
-
-* Complete onboarding
-* Select a reading journey
-* Access today's reading
-* Read Scripture
-* Complete the reading
-* Receive XP
-* Maintain a streak
-* See reading progress
-
-### Persistence
-
-User progress remains available after closing and reopening the application.
-
-### Scripture
-
-The application can reliably load and display the required ILT3 Scripture content.
-
-### Reminder
-
-The user can enable a daily reading reminder and receive a local notification.
-
-### Device
-
-The core application can run reliably on a real Android device.
-
----
-
-# 28. Out of Scope for MVP
-
-The following are intentionally excluded from the initial architecture:
-
-* Audio Bible
-* AI assistant
-* Social features
-* Leaderboards
-* Multiple Bible translations
-* Cloud synchronization
-* User authentication
-* Online accounts
-* Complex recommendation systems
-
-These may be considered in future versions.
-
----
-
-# 29. Future Features
-
-Potential future features include:
-
-* Achievements
-* Reading history
-* Bookmarks
-* Throwbacks / review
-* Statistics
-* Additional reading journeys
-* Additional content types
-* Cloud synchronization
-* User accounts
-
-These features should only be implemented after the core reading experience is stable.
-
----
-
-# 30. Architecture Principles
-
-The Meno project follows these principles:
-
-### Keep It Simple
-
-Do not introduce a technology unless the project needs it.
-
-### Local First
-
-The core experience should work without an internet connection whenever possible.
-
-### Separate Content From User Data
-
-Scripture content and user progress should remain separate.
-
-### UI Should Not Own Business Logic
-
-Compose screens should display state and respond to user interaction.
-
-### Reuse Components
-
-Common UI patterns should become reusable Meno components.
-
-### Build for the MVP First
-
-Future scalability should not make the current project unnecessarily complicated.
-
----
-
-# 31. Final Architecture
-
-The final MVP architecture can be summarized as:
-
 ```text
-                         MENO
-                          │
-              ┌───────────┴───────────┐
-              │                       │
-        Presentation               Navigation
-              │
-      Jetpack Compose
-              │
-         ViewModels
-              │
-              ↓
-           Domain
-              │
-       Reading / XP /
-      Streak / Progress
-              │
-              ↓
-            Data
-              │
-      ┌───────┼────────┐
-      ↓       ↓        ↓
-    Room   DataStore  Scripture
-                     Local Data
+User
+ ↓
+Compose UI
+ ↓
+ViewModel
+ ↓
+Use Case
+ ↓
+Repository
+ ↓
+Local Data
+ ↓
+Updated State
+ ↓
+Compose UI
 ```
 
-## Official MVP Stack
+This architecture provides Meno with a lightweight, maintainable, offline-first foundation while keeping the MVP small enough to implement within the course project timeline.
 
-```text
-Language       → Kotlin
-UI             → Jetpack Compose
-UI Foundation  → Material 3
-Architecture   → MVVM + Layered Architecture
-Navigation     → Navigation Compose
-Database       → Room
-Preferences    → DataStore
-Async          → Kotlin Coroutines
-Reactive State → Kotlin Flow
-Notifications  → WorkManager + Android Notifications
-Scripture      → Local ILT3.Yes data
-Testing        → JUnit + Compose UI Testing
-Version Control→ Git + GitHub
-Backend        → None for MVP
+---
+
+## End
+
 ```
-
-Meno's architecture is intentionally designed to be **simple enough for a student project while still being structured enough to support future development**.
