@@ -1,17 +1,54 @@
-*.iml
-.gradle
-/local.properties
-/.idea/
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
+.atom/
+.buildlog/
+.history
+.svn/
+.idea/
+*.iml
 
-# Flutter ignores
+# IDE & Editor files
+.vscode/
+.idea/
+*.ipr
+*.iws
+
+# User-specific files
+.project
+.directory
+.exec
+
+# Flutter / Dart / Pub build outputs & caches
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
+.pub-preload-cache/
 .pub-cache/
 .pub/
+/build/
+
+# Android build outputs & local properties
+.gradle
+/local.properties
+local.properties
+.externalNativeBuild
+.cxx
+/captures
+
+# iOS build outputs
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/ephemeral/
+**/ios/Runner/GeneratedPluginRegistrant.h
+**/ios/Runner/GeneratedPluginRegistrant.m
+
+# Web generated files
+lib/generated_plugin_registrant.dart
+
+# Prototype & Migration Analysis Docs
+prototype_analysis_and_implementation_plan.md
+meno.prototipe/
