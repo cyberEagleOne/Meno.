@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-lowest": "#ffffff",
+        "tertiary-fixed-dim": "#ffb3b0",
+        "surface-container-low": "#f5f3f0",
+        "tertiary-container": "#cd484b",
+        "on-error-container": "#93000a",
+        "surface-container-highest": "#e4e2df",
+        "on-tertiary-fixed": "#410006",
+        "on-tertiary": "#ffffff",
+        "on-secondary": "#ffffff",
+        "inverse-primary": "#77d6cf",
+        "on-background": "#1b1c1a",
+        "surface-container-high": "#eae8e5",
+        "secondary-fixed": "#ffddb8",
+        "background": "#fbf9f6",
+        "on-tertiary-fixed-variant": "#8b1721",
+        "on-surface-variant": "#3e4948",
+        "error": "#ba1a1a",
+        "inverse-on-surface": "#f2f0ed",
+        "outline": "#6e7978",
+        "error-container": "#ffdad6",
+        "primary-fixed-dim": "#77d6cf",
+        "on-primary-fixed": "#00201e",
+        "primary-container": "#10847e",
+        "on-secondary-fixed": "#2a1700",
+        "inverse-surface": "#30312f",
+        "on-secondary-fixed-variant": "#653e00",
+        "surface-dim": "#dbdad7",
+        "on-secondary-container": "#684000",
+        "tertiary-fixed": "#ffdad8",
+        "secondary-container": "#fea619",
+        "outline-variant": "#bdc9c7",
+        "surface-tint": "#006a65",
+        "surface": "#fbf9f6",
+        "surface-variant": "#e4e2df",
+        "on-error": "#ffffff",
+        "on-tertiary-container": "#ffffff",
+        "on-surface": "#1b1c1a",
+        "primary-fixed": "#94f3eb",
+        "on-primary-container": "#ffffff",
+        "secondary": "#855300",
+        "surface-container": "#efeeeb",
+        "surface-bright": "#fbf9f6",
+        "secondary-fixed-dim": "#ffb95f",
+        "on-primary-fixed-variant": "#00504c",
+        "on-primary": "#ffffff",
+        "tertiary": "#ab3035",
+        "primary": "#006964"
+      },
+      borderRadius: {
+        "DEFAULT": "0.25rem",
+        "lg": "0.5rem",
+        "xl": "0.75rem",
+        "2xl": "1rem",
+        "full": "9999px"
+      },
+      spacing: {
+        "space-sm": "0.5rem",
+        "gutter": "1rem",
+        "space-md": "1rem",
+        "margin": "1.25rem",
+        "space-lg": "1.5rem",
+        "space-xl": "2.25rem",
+        "space-xs": "0.25rem"
+      },
+      fontFamily: {
+        sans: ["Outfit", "sans-serif"]
+      }
+    }
+  }
+};
+</script>
+<style>
+  * {
+    font-family: 'Outfit', sans-serif;
+  }
+  @layer base {
+    html, body {
+      width: 100vw;
+      margin: 0;
+      padding: 0;
+      background-color: #fbf9f6;
+    }
+    body {
+      overscroll-behavior: none;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 100dvh;
+    }
+    .pb-safe {
+      padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+    }
+    .pt-safe {
+      padding-top: max(env(safe-area-inset-top, 0px), 12px);
+    }
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+</head>
+<body class="bg-surface text-on-surface flex flex-col min-h-screen">
+<!-- Top Bar & Header -->
+<header class="fixed top-0 inset-x-0 z-50 bg-[#fbf9f6]/95 backdrop-blur-md border-b border-surface-container-high/60 pt-safe transition-all">
+<div class="h-14 px-margin flex items-center justify-between max-w-lg mx-auto w-full">
+<!-- Brand Logo -->
+<a aria-label="Meno Home" class="flex items-center" href="#">
+<img alt="meno" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WvZqncSCpbrt2NItaMJ9duuXR6o2rfhBmK3UtEK-8v2By1ZqPRfZix9zclv1XsT4CIFE7vB7tx8sOId6OFh7QnOcWxzdJESOObRmPtG-W8ftUg5Ym3u3gZs1eUQpz39zyveU1u09xjP9gPZ7yGm0G0v6NFw1mcqtotkeuoBaAxK7nob0aa5K994Ziwlk-WMai4YEh7jTVIqBfdekXoEyntzsnjpvhcLO4UZV9l1FQ8s3nXikN2pvYXMWbC"/>
+</a>
+<!-- Top Stats & Profile Avatar -->
+<div class="flex items-center gap-2">
+<!-- Streak Pill -->
+<div class="flex items-center gap-1.5 bg-[#ffedd5] px-2.5 py-1 rounded-full shadow-sm border border-amber-200">
+<span class="text-sm leading-none">🔥</span>
+<span class="text-xs font-bold text-[#855300]">7</span>
+</div>
+<!-- XP Pill -->
+<div class="flex items-center gap-1.5 bg-[#e6f4f2] px-2.5 py-1 rounded-full shadow-sm border border-teal-100">
+<span class="text-sm leading-none">⭐</span>
+<span class="text-xs font-bold text-primary">120 XP</span>
+</div>
+<!-- Profile Avatar -->
+<button aria-label="Profile" class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm hover:opacity-90 active:scale-95 transition-transform">
+<svg class="w-4 h-4 text-white" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Scrollable Content -->
+<main class="flex-1 flex flex-col pt-20 pb-28 max-w-lg mx-auto w-full px-margin space-y-5">
+<!-- 1. Warm Greeting Section -->
+<section class="flex items-center justify-between pt-1">
+<div class="space-y-0.5 max-w-[75%]">
+<h1 class="text-2xl font-extrabold text-on-surface tracking-tight flex items-center gap-1.5 flex-wrap">
+<span>Good morning, Natasha</span>
+<span class="inline-block text-xl">👋</span>
+</h1>
+<p class="text-sm font-medium text-on-surface-variant">
+        Ready for today's quiet moment?
+      </p>
+</div>
+<!-- Happy Mascot -->
+<div class="flex-shrink-0">
+<img alt="Happy mascot" class="w-14 h-14 object-contain animate-bounce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUFqkZY3N3UwwPBLCsD-fEf39VnnUstpKT75rEthmyDUrIwFlJnfS5Ws9_jc3prqQJi52a1m9RS78PLXIcaU7qFZ08M07hbKCVZpJhuG25cXlVqU8J-AcZI6qewjscUXXkZpwiYiGLf8AGlfW4ezKk5U54psDmFa_JIV8r3-CvI4npoDbyFHbQ1J92sQJP5D1bUGJMkqSxQT9X-MKKY-OVCcuCaiJkMlarVYH1kVZrrczhJ8g8jf5tDk9CuPQr1cWpB1I" style="animation-duration: 2.4s;"/>
+</div>
+</section>
+<!-- 2. 7-Day Streak Card -->
+<section class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-surface-container-high space-y-3.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-xl shadow-inner">
+          🔥
+        </div>
+<div>
+<div class="text-base font-bold text-on-surface leading-tight">7-Day Streak</div>
+<div class="text-xs text-on-surface-variant font-medium">Personal best! Keep the light burning</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 bg-[#fef3c7] text-[#855300] px-2.5 py-1 rounded-full text-xs font-bold">
+<span>⏱️</span>
+<span>10 min/day</span>
+</div>
+</div>
+<!-- 7 Day Indicators -->
+<div class="grid grid-cols-7 gap-2 pt-1 border-t border-surface-container-low">
+<!-- Mon -->
+<div class="flex flex-col items-center gap-1">
+<span class="text-[11px] font-semibold text-on-surface-variant">M</span>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+<!-- Tue -->
+<div class="flex flex-col items-center gap-1">
+<span class="text-[11px] font-semibold text-on-surface-variant">T</span>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+<!-- Wed -->
+<div class="flex flex-col items-center gap-1">
+<span class="text-[11px] font-semibold text-on-surface-variant">W</span>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+<!-- Thu -->
+<div class="flex flex-col items-center gap-1">
+<span class="text-[11px] font-semibold text-on-surface-variant">T</span>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+<!-- Fri -->
+<div class="flex flex-col items-center gap-1">
+<span class="text-[11px] font-semibold text-on-surface-variant">F</span>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+<!-- Sat -->
+<div class="flex flex-col items-center gap-1">
+<span class="text-[11px] font-semibold text-on-surface-variant">S</span>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-sm">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+</div>
+<!-- Sun (Today Active Glow) -->
+<div class="flex flex-col items-center gap-1">
+<span class="text-[11px] font-bold text-secondary">S</span>
+<div class="w-8 h-8 rounded-full bg-secondary-container text-white flex items-center justify-center font-bold text-xs shadow-[0_2px_8px_rgba(254,166,25,0.45)] ring-2 ring-secondary-container/50">
+          ✨
+        </div>
+</div>
+</div>
+</section>
+<!-- 3. "Today's Reading" Hero Card -->
+<section class="relative bg-surface-container-lowest rounded-2xl p-5 shadow-sm border border-surface-container-high overflow-hidden">
+<div class="flex items-start justify-between gap-3">
+<!-- Text details -->
+<div class="flex-1 space-y-2 z-10">
+<div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-fixed/60 text-on-primary-fixed text-[11px] font-bold tracking-wide uppercase">
+          DAY 7 OF 30 • GOSPEL OF MATTHEW
+        </div>
+<div>
+<h2 class="text-xl font-extrabold text-on-surface leading-tight">
+            Matthew 5:1–12
+          </h2>
+<p class="text-sm font-medium text-on-surface-variant mt-0.5">
+            The Beatitudes: Blessings on the Mount
+          </p>
+</div>
+<!-- Tags -->
+<div class="flex items-center gap-2 pt-1">
+<span class="inline-flex items-center gap-1 text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-full">
+<svg class="w-3.5 h-3.5 text-on-surface-variant" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
+            ~4 min read
+          </span>
+<span class="inline-flex items-center gap-1 text-xs font-bold text-primary bg-primary-fixed/50 px-2.5 py-1 rounded-full">
+<svg class="w-3.5 h-3.5 text-amber-500 fill-amber-400" viewbox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"></path></svg>
+            +25 XP
+          </span>
+</div>
+</div>
+<!-- Mascot -->
+<div class="w-24 h-28 flex-shrink-0 relative flex items-center justify-center z-10">
+<img alt="Ready to Read Mascot" class="w-full h-full object-contain filter drop-shadow-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYvX5zkl46py2oSCPKIuiNgA4Pvp5jtKucsUc6MQ13IzqXAiQJbv_phY3RnmC9v-SxnQa1-PcOtHYOwV2YTcbm3WCS8wiMOFzZ5tRgC8vkxpgHCvD7AxQc9Osj264PC_k6sEM5QligLGt6bT4VRDFelx8f0WCrrbooDZW_NyAjE1amwd0Q88gEsjPj0wUImvM84khHpLjDLty6WSKusfe5nNfEmXBFAveyby4Q5kIcwebygld_GhPUjl31ttniJcSyuA4"/>
+</div>
+</div>
+<!-- CTA Button -->
+<div class="pt-4 relative z-10">
+<button class="w-full py-3 px-5 rounded-full bg-primary text-white text-base font-bold shadow-[0_4px_0_#00504c] active:translate-y-1 active:shadow-[0_1px_0_#00504c] hover:brightness-105 transition-all flex items-center justify-center gap-2" id="startReadingBtn">
+<span>Continue Reading</span>
+<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</section>
+<!-- 4. Today's Path Mini Roadmap -->
+<section class="bg-surface-container-low rounded-2xl p-5 shadow-sm border border-surface-container-high space-y-4">
+<!-- Header -->
+<div class="flex items-center justify-between">
+<div>
+<h3 class="text-base font-extrabold text-on-surface">Today's Path</h3>
+<p class="text-xs font-semibold text-on-surface-variant">Matthew Walking Journey</p>
+</div>
+<a class="text-xs font-bold text-primary flex items-center gap-1 hover:underline" href="#">
+<span>Full Roadmap</span>
+<svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</a>
+</div>
+<!-- Stepper Roadmap Nodes -->
+<div class="relative py-2 flex flex-col items-center">
+<!-- Connecting line behind nodes -->
+<div class="absolute top-6 bottom-6 w-1 bg-surface-container-highest rounded-full left-1/2 -translate-x-1/2"></div>
+<!-- Node 1: Completed Matthew 3 (Left-aligned) -->
+<div class="relative z-10 w-full flex items-center justify-start pl-4 sm:pl-8 mb-4">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<div class="text-sm font-bold text-on-surface">Matthew 3</div>
+<div class="text-xs text-outline font-medium">Water &amp; Spirit</div>
+</div>
+</div>
+</div>
+<!-- Node 2: Completed Matthew 4 (Right-aligned) -->
+<div class="relative z-10 w-full flex items-center justify-end pr-4 sm:pr-8 mb-4">
+<div class="flex items-center gap-3 flex-row-reverse text-right">
+<div class="w-11 h-11 rounded-full bg-primary text-white flex items-center justify-center shadow-md">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<div>
+<div class="text-sm font-bold text-on-surface">Matthew 4</div>
+<div class="text-xs text-outline font-medium">In the Wilderness</div>
+</div>
+</div>
+</div>
+<!-- Node 3: Current Active (Center) -->
+<div class="relative z-10 w-full flex flex-col items-center my-2">
+<!-- Start tooltip badge -->
+<span class="bg-primary text-white text-[11px] font-extrabold px-3 py-0.5 rounded-full shadow-sm mb-1.5 uppercase tracking-wider animate-pulse">
+          START HERE
+        </span>
+<button class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center shadow-[0_4px_0_#00504c] active:translate-y-1 active:shadow-[0_1px_0_#00504c] transition-transform ring-4 ring-primary/20">
+<svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<div class="text-center mt-2">
+<div class="text-base font-bold text-on-surface">Matthew 5</div>
+<div class="text-xs font-semibold text-primary">The Sermon on the Mount</div>
+</div>
+</div>
+<!-- Node 4: Upcoming (Left-aligned) -->
+<div class="relative z-10 w-full flex items-center justify-start pl-4 sm:pl-8 my-4">
+<div class="flex items-center gap-3 opacity-60">
+<div class="w-11 h-11 rounded-full bg-surface-container-highest flex items-center justify-center text-outline border border-outline-variant">
+<svg class="w-5 h-5 text-outline" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="8"></circle>
+</svg>
+</div>
+<div>
+<div class="text-sm font-bold text-on-surface">Matthew 6</div>
+<div class="text-xs text-outline font-medium">The Lord's Prayer</div>
+</div>
+</div>
+</div>
+<!-- Node 5: Milestone (Right-aligned) -->
+<div class="relative z-10 w-full flex items-center justify-end pr-4 sm:pr-8 opacity-60">
+<div class="flex items-center gap-3 flex-row-reverse text-right">
+<div class="w-11 h-11 rounded-full bg-surface-container-highest flex items-center justify-center text-outline border border-outline-variant">
+<svg class="w-5 h-5 text-outline" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect>
+<path d="M7 11V7a5 5 0 0110 0v4"></path>
+</svg>
+</div>
+<div>
+<div class="text-sm font-bold text-on-surface">Chapter 7 Milestone</div>
+<div class="text-xs text-outline font-medium">Golden Bookmark Award</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Encouraging Pastoral Microcopy Card -->
+<section class="bg-[#ffedd5]/60 border border-[#fed7aa] rounded-2xl p-4 flex items-center gap-3.5">
+<div class="text-2xl flex-shrink-0">🌱</div>
+<p class="text-sm font-medium text-[#7c2d12] leading-snug">
+<strong class="font-bold">Small habits become enduring wisdom.</strong> You're currently on a 7-day roll of peace and reflection.
+    </p>
+</section>
+<!-- 6. Daily Reflection Companion Card -->
+<section class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-surface-container-high flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#ffe4e6] flex items-center justify-center text-[#e11d48]">
+<svg class="w-5 h-5 fill-[#e11d48]" viewbox="0 0 24 24">
+<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+</svg>
+</div>
+<div>
+<div class="text-sm font-bold text-on-surface">Evening Prayer</div>
+<div class="text-xs text-on-surface-variant font-medium">Unlocks at 7:00 PM tonight</div>
+</div>
+</div>
+<button class="bg-surface-container px-3.5 py-1.5 rounded-full text-xs font-bold text-on-surface-variant hover:bg-surface-container-high active:scale-95 transition-all shadow-[0_2px_0_#bdc9c7]">
+      Remind me
+    </button>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-[#fbf9f6]/95 backdrop-blur-md border-t border-surface-container-high shadow-lg">
+<div class="flex justify-around items-center h-16 max-w-lg mx-auto px-2">
+<!-- Tab 1: Home (Active) -->
+<a class="flex flex-col items-center justify-center min-w-[64px] py-1 text-primary" href="#">
+<div class="relative">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24">
+<path d="M19.48 12.35c-1.57-.56-2.54-1.19-3.55-2.46-1.5-1.89-2.03-4.29-1.49-6.89.04-.19-.13-.35-.3-.3-3.64 1.13-5.89 4.14-5.32 7.72.04.28-.24.5-.47.36-1.53-.94-2.28-2.34-2.4-3.77-.02-.2-.27-.29-.39-.14C3.89 9.17 3 11.95 3 14c0 4.97 4.03 9 9 9s9-4.03 9-9c0-.62-.06-1.22-.19-1.81-.04-.2-.26-.29-.42-.16-.27.23-.58.46-.91.32z"></path>
+</svg>
+</div>
+<span class="text-[11px] font-bold mt-1">Home</span>
+</a>
+<!-- Tab 2: Journey -->
+<a class="flex flex-col items-center justify-center min-w-[64px] py-1 text-outline hover:text-on-surface transition-colors" href="#">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="10"></circle>
+<polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+</svg>
+<span class="text-[11px] font-semibold mt-1">Journey</span>
+</a>
+<!-- Tab 3: Review -->
+<a class="flex flex-col items-center justify-center min-w-[64px] py-1 text-outline hover:text-on-surface transition-colors" href="#">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[11px] font-semibold mt-1">Review</span>
+</a>
+<!-- Tab 4: Profile -->
+<a class="flex flex-col items-center justify-center min-w-[64px] py-1 text-outline hover:text-on-surface transition-colors" href="#">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="text-[11px] font-semibold mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+  const startBtn = document.getElementById('startReadingBtn');
+  if (startBtn) {
+    startBtn.addEventListener('click', () => {
+      startBtn.classList.add('scale-95');
+      const originalHTML = startBtn.innerHTML;
+      startBtn.innerHTML = `<span>Opening Matthew 5...</span>`;
+      setTimeout(() => {
+        startBtn.classList.remove('scale-95');
+        startBtn.innerHTML = originalHTML;
+      }, 1200);
+    });
+  }
+</script>
+</body></html>

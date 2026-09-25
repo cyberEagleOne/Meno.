@@ -2,7 +2,7 @@
 
 > **Meno — Read. Remain. Grow.**
 >
-> UI/UX and visual design specification for the Meno Android MVP.
+> UI/UX and visual design specification for the Meno Flutter Application.
 
 ---
 
@@ -10,34 +10,32 @@
 
 Meno is a gamified Bible reading application designed to help users build a consistent Scripture reading habit.
 
-The visual design should communicate:
+The visual design communicates:
 
-- Welcoming
-- Calm
-- Encouraging
-- Playful
-- Modern
-- Trustworthy
-- Motivating
-- Spiritual without being overly formal
+* Welcoming
+* Calm & Encouraging
+* Warm & Playful
+* Modern & Tactile
+* Trustworthy & Motivating
+* Spiritual without being overly formal
 
-Meno takes inspiration from the engagement principles of modern gamified learning applications, while maintaining its own visual identity.
+Meno takes inspiration from the engagement and usability principles of modern habit-building applications while maintaining its distinct visual and tactile identity.
 
-The interface should feel:
+The interface is crafted according to the core principle:
 
-> **Fun enough to encourage users to return, but mature enough to feel like a meaningful reading application.**
+> **Fun and encouraging enough to motivate daily returns, but calm and distraction-free during active Scripture reading.**
 
 ---
 
 ## 2. Design Goals
 
-The Meno design system has five primary goals:
+The Meno design system serves five primary goals:
 
-1. Make Bible reading feel approachable for beginners.
-2. Make progress visible and rewarding.
-3. Create a welcoming experience rather than a rigid reading tool.
-4. Maintain visual consistency across the application.
-5. Support fast and comfortable interaction on mobile devices.
+1. **Make Bible reading approachable**: Eliminate intimidating dense layouts for beginners.
+2. **Make progress visually clear**: Provide instant, rewarding feedback for completed readings.
+3. **Establish a tactile visual identity**: Use rounded bevel buttons and warm surfaces that feel responsive and engaging.
+4. **Maintain strict visual consistency**: Use centralized design tokens across all Flutter widgets.
+5. **Prioritize reading ergonomics**: Ensure Scripture text is comfortably readable with optimal line heights and typography contrast.
 
 ---
 
@@ -45,1778 +43,362 @@ The Meno design system has five primary goals:
 
 ### 3.1 Welcoming Over Formal
 
-Meno should feel approachable.
-
-Avoid making the interface feel like:
-
-- A traditional Bible study application
-- A corporate productivity dashboard
-- A school assignment
-- A dense reading/reference tool
+Meno feels approachable and friendly. It avoids looking like a corporate utility or an academic Bible study database.
 
 Prefer:
-
-- Friendly language
-- Rounded components
-- Soft visual hierarchy
-- Encouraging feedback
-- Character-driven moments
-
----
+* Friendly, encouraging microcopy
+* Soft, warm surfaces and rounded containers
+* Clear visual hierarchy with obvious primary actions
+* Character-driven mascot feedback moments
 
 ### 3.2 Playful but Not Childish
 
-Meno uses gamification and illustration, but the application is not intended to look like a children's application.
-
-The visual balance should be:
+Meno balances gamification elements (XP, streaks, celebrations) with a mature, modern layout.
 
 ```text
-Playful
-   │
-   ├── Mascot
-   ├── Friendly illustrations
-   ├── XP
-   ├── Streaks
-   └── Celebration
-   │
+Playful Elements
+   │  ├── Bean Mascot moments
+   │  ├── Tactile bevel buttons
+   │  ├── XP & streak indicators
+   │  └── Subtle celebration feedback
    ▼
-Modern & Mature
-   │
-   ├── Clean typography
-   ├── Controlled colors
-   ├── Simple layouts
-   └── Strong readability
-````
-
-Avoid:
-
-* Excessive cartoon elements
-* Baby-like illustrations
-* Too many bright colors
-* Overly exaggerated expressions
-* Excessive decorative elements
-
----
-
-### 3.3 Progress Should Feel Visible
-
-Users should understand:
-
-* What they are reading
-* What they have completed
-* How much progress they have made
-* What they should do next
-
-Progress should be visually obvious without overwhelming the screen.
-
----
-
-### 3.4 One Primary Action
-
-Each screen should have a clear primary action.
-
-Examples:
-
-```text
-Home
-→ Continue Reading
-
-Journey
-→ Start Reading
-
-Reading
-→ Complete Reading
-
-Completion
-→ Continue
+Modern & Readable UI
+      ├── Clean Outfit headings & Plus Jakarta Sans body
+      ├── Curated warm off-white surfaces
+      ├── Generous whitespace
+      └── Uncluttered reading experience
 ```
 
-Secondary actions should have lower visual priority.
+### 3.3 Visible & Meaningful Progress
+
+Users should immediately grasp:
+* What passage to read today.
+* How many readings are complete in their active journey.
+* Their active daily reading streak.
+* What step comes next.
+
+### 3.4 One Primary Action per Screen
+
+Every screen highlights a single prominent primary action button (e.g., `Start Journey`, `Continue Reading`, `Complete Reading`). Secondary actions maintain lower visual weight.
 
 ---
 
-### 3.5 Reduce Cognitive Load
+## 4. Brand Identity
 
-The application is designed for users who may not know:
+### 4.1 Brand Name & Tagline
 
-* Where to begin reading
-* Which book to choose
-* What order to follow
-* How much to read
+* **Name**: **Meno**
+* **Tagline**: **Read. Remain. Grow.**
 
-Meno should make these decisions simple through guided journeys.
-
----
-
-# 4. Brand Identity
-
-## 4.1 Brand Name
-
-**Meno**
-
-The name is short, friendly, memorable, and visually flexible.
-
----
-
-## 4.2 Tagline
-
-> **Read. Remain. Grow.**
-
-The tagline represents the core product philosophy:
+The tagline reflects the core product philosophy:
 
 ```text
-Read
+Read (Start daily Scripture)
   ↓
-Build consistency
+Remain (Build consistency through streaks)
   ↓
-Remain
-  ↓
-Develop a habit
-  ↓
-Grow
+Grow (Develop a lasting spiritual habit)
+```
+
+### 4.2 Brand Personality Spectrum
+
+| Trait | Target Intensity |
+| :--- | :--- |
+| **Friendly & Welcoming** | High |
+| **Tactile & Responsive** | High |
+| **Modern & Clean** | High |
+| **Playful** | Medium–High |
+| **Calm / Spiritual** | Medium–High (High on Reader screen) |
+| **Formal / Academic** | Low |
+| **Childish / Cartoonish** | Low |
+| **Corporate / Sterile** | Low |
+
+---
+
+## 5. Color System
+
+Meno uses a refined Teal primary palette paired with warm Amber accents and soft, paper-like background surfaces.
+
+### 5.1 Palette Tokens
+
+```text
+Primary Palette (Teal):
+┌─────────────────────────┬───────────┬──────────────────────────────────────────┐
+│ Token Name              │ Hex Code  │ Primary Role                             │
+├─────────────────────────┼───────────┼──────────────────────────────────────────┤
+│ Meno Primary Teal       │ #006964   │ Brand identity, primary buttons, headers │
+│ Meno Secondary Teal     │ #10847E   │ Interactive accents, secondary elements  │
+│ Light Teal              │ #94F3EB   │ Active highlights, selection backgrounds │
+│ Teal Fixed Dim          │ #77D6CF   │ Muted teal borders, subtle chips         │
+│ Tactile Bevel           │ #00504C   │ 4dp bottom bevel shadow for buttons      │
+└─────────────────────────┴───────────┴──────────────────────────────────────────┘
+
+Accent Palette (Amber / Gamification):
+┌─────────────────────────┬───────────┬──────────────────────────────────────────┐
+│ Token Name              │ Hex Code  │ Primary Role                             │
+├─────────────────────────┼───────────┼──────────────────────────────────────────┤
+│ Amber (Accent)          │ #FEA619   │ XP rewards, streak flames, star badges   │
+│ Amber Dark              │ #855300   │ Streak text contrast, dark accent borders│
+│ Amber Fixed             │ #FFDDB8   │ Warm badge container fills               │
+│ Amber Light             │ #FEF3C7   │ Celebration banners, highlight cards     │
+└─────────────────────────┴───────────┴──────────────────────────────────────────┘
+
+Background & Surface System (Warm Warm-Tones):
+┌─────────────────────────┬───────────┬──────────────────────────────────────────┐
+│ Token Name              │ Hex Code  │ Primary Role                             │
+├─────────────────────────┼───────────┼──────────────────────────────────────────┤
+│ Background              │ #FBF9F6   │ Primary app screen background (soft paper)│
+│ Surface                 │ #FFFFFF   │ Pure white card containers & modals      │
+│ Warm Surface            │ #F5F3F0   │ Secondary card fills & list items        │
+│ Warm Surface Alt 1      │ #EFEEEB   │ Subtle divider & container fills         │
+│ Warm Surface Alt 2      │ #EAE8E5   │ Inactive control fills                   │
+│ Warm Surface Alt 3      │ #E4E2DF   │ Disabled borders                         │
+└─────────────────────────┴───────────┴──────────────────────────────────────────┘
+
+Text & Outline System:
+┌─────────────────────────┬───────────┬──────────────────────────────────────────┐
+│ Token Name              │ Hex Code  │ Primary Role                             │
+├─────────────────────────┼───────────┼──────────────────────────────────────────┤
+│ Primary Text            │ #1B1C1A   │ Headings, primary titles, Scripture text │
+│ Secondary Text          │ #3E4948   │ Subtitles, captions, supporting labels   │
+│ Outline                 │ #6E7978   │ Card borders, active input outlines      │
+│ Outline Variant         │ #BDC9C7   │ Muted card dividers & soft borders       │
+└─────────────────────────┴───────────┴──────────────────────────────────────────┘
 ```
 
 ---
 
-## 4.3 Brand Personality
+## 6. Typography
 
-Meno should feel:
+Meno employs a distinct two-font typography pairing:
 
-| Trait     | Direction   |
-| --------- | ----------- |
-| Friendly  | High        |
-| Welcoming | High        |
-| Playful   | Medium–High |
-| Calm      | Medium–High |
-| Modern    | High        |
-| Spiritual | Present     |
-| Formal    | Low         |
-| Childish  | Low         |
-| Corporate | Low         |
+1. **Outfit**: Display, Headings, Gamification numbers, and prominent UI labels.
+2. **Plus Jakarta Sans**: Body text, general UI controls, Scripture reading passages, and supporting information.
 
----
-
-# 5. Color System
-
-Meno uses a teal-based primary palette with orange as an energetic accent.
-
-## 5.1 Primary Colors
-
-### Meno Teal
+### 6.1 Font Hierarchy Specifications
 
 ```text
-#006964
-```
+Display Large (Outfit Bold / 32–36dp / height 1.2)
+└── Onboarding main titles, milestone celebrations
 
-Primary brand color.
+Heading 1 (Outfit Bold / 24–28dp / height 1.25)
+└── Screen headers, major section titles
 
-Used for:
+Heading 2 (Outfit SemiBold / 20–22dp / height 1.3)
+└── Card titles, dialog headers, journey names
 
-* Primary buttons
-* Navigation
-* Important actions
-* Progress indicators
-* Selected states
-* Brand elements
+Heading 3 (Outfit SemiBold / 16–18dp / height 1.35)
+└── Sub-section titles, list item headers
 
----
+Body Large (Plus Jakarta Sans Regular / 16–18dp / height 1.6)
+└── Scripture reading text, primary narrative descriptions
 
-### Meno Teal Light
+Body Medium (Plus Jakarta Sans Regular / 14–15dp / height 1.5)
+└── Card body text, feature summaries, instructions
 
-```text
-#10847E
-```
+Caption (Plus Jakarta Sans Medium / 12–13dp / height 1.4)
+└── Metadata, verse numbers, dates, timestamps
 
-Secondary teal.
-
-Used for:
-
-* Secondary actions
-* Supporting UI
-* Cards
-* Interactive elements
-* Visual variation
-
----
-
-### Meno Orange
-
-```text
-#FEA619
-```
-
-Accent color.
-
-Used for:
-
-* XP
-* Rewards
-* Streak highlights
-* Celebration
-* Important gamification feedback
-* Small attention-grabbing elements
-
-Orange should be used as an accent rather than the dominant screen color.
-
----
-
-## 5.2 Background
-
-Primary background should use a warm off-white rather than pure white.
-
-Example:
-
-```text
-#FFFDF8
-```
-
-This creates a softer reading environment.
-
----
-
-## 5.3 Text Colors
-
-Primary text:
-
-```text
-#1F2937
-```
-
-Secondary text:
-
-```text
-#667085
-```
-
-Muted text:
-
-```text
-#98A2B3
-```
-
-These colors should maintain sufficient contrast against the background.
-
----
-
-## 5.4 Semantic Colors
-
-Success:
-
-```text
-#2E9B63
-```
-
-Warning:
-
-```text
-#F4A340
-```
-
-Error:
-
-```text
-#D64545
-```
-
-Information:
-
-```text
-#3B82A0
-```
-
-Semantic colors should not replace the primary Meno palette.
-
-They should only communicate system states.
-
----
-
-# 6. Typography
-
-Meno uses **Outfit** as the primary typeface.
-
-Outfit provides a modern and friendly appearance while remaining readable.
-
-## 6.1 Typography Hierarchy
-
-### Display
-
-Used for:
-
-* Major onboarding statements
-* Celebration moments
-* Large progress numbers
-
-Suggested:
-
-```text
-Outfit Bold
-32–40sp
+Button Text (Outfit SemiBold / 16dp / height 1.2 / letter-spacing 0.5)
+└── Tactile bevel button labels
 ```
 
 ---
 
-### Heading 1
+## 7. Spacing & Layout System
 
-Used for:
-
-* Screen titles
-* Major sections
+Meno uses a standard **8dp grid system**:
 
 ```text
-Outfit Bold
-26–30sp
+4dp   → Micro spacing (badge padding, icon-text gap)
+8dp   → Small spacing (chip padding, tight list item gaps)
+12dp  → Compact spacing (card internal element padding)
+16dp  → Standard screen margin & card padding
+24dp  → Section separation gap
+32dp  → Major section gap / header spacing
+48dp  → Hero section top/bottom padding
 ```
+
+Default screen horizontal padding: **16dp** (expanding up to 24dp on wider mobile displays).
 
 ---
 
-### Heading 2
+## 8. Shape System & Tactile Language
 
-Used for:
+Meno's visual signature is defined by friendly rounded corners and tactile 3D bevel buttons.
 
-* Card titles
-* Section headings
+### 8.1 Corner Radii
 
-```text
-Outfit SemiBold
-20–24sp
-```
+* **Small**: `8dp` (chips, small badges, input fields)
+* **Medium**: `12dp` (standard buttons, list items)
+* **Large**: `16dp` (primary cards, dialog boxes)
+* **Extra Large**: `24dp` (bottom sheets, hero containers)
+* **Pill**: `50%` / `999dp` (streak pills, tag badges)
 
----
+### 8.2 Tactile Bevel Button Mechanism
 
-### Body
-
-Used for:
-
-* Descriptions
-* Scripture supporting information
-* Explanations
+Primary buttons (`MenoButton`) feature a 3D tactile bevel effect:
 
 ```text
-Outfit Regular
-15–17sp
-```
-
----
-
-### Caption
-
-Used for:
-
-* Metadata
-* Supporting information
-* Small labels
-
-```text
-Outfit Medium
-12–14sp
-```
-
----
-
-### Button Text
-
-```text
-Outfit SemiBold
-14–16sp
-```
-
----
-
-## 6.2 Typography Rules
-
-Do:
-
-* Use clear hierarchy
-* Keep body text comfortable to read
-* Use weight to establish importance
-* Keep Scripture text highly readable
-
-Avoid:
-
-* Excessive font weights
-* All-caps paragraphs
-* Extremely small text
-* Decorative fonts
-* Multiple font families
-
----
-
-# 7. Spacing System
-
-Use an 8dp-based spacing system.
-
-```text
-4dp   → micro spacing
-8dp   → small spacing
-12dp  → compact spacing
-16dp  → standard spacing
-24dp  → section spacing
-32dp  → major spacing
-40dp  → large separation
-48dp  → major visual separation
-```
-
-The most common spacing values should be:
-
-```text
-8
-16
-24
-32
-```
-
-Consistency is more important than using every available value.
-
----
-
-# 8. Layout System
-
-Meno is designed primarily for mobile portrait screens.
-
-Default structure:
-
-```text
+Default State:
 ┌─────────────────────────┐
-│       Top Area          │
-├─────────────────────────┤
-│                         │
-│       Main Content      │
-│                         │
-│                         │
-├─────────────────────────┤
-│     Primary Action      │
+│     Continue Reading    │  ◄── Primary Fill (#006964)
 └─────────────────────────┘
-```
+  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀  ◄── 4dp Tactile Bevel Shadow (#00504C)
 
-Screens should maintain comfortable horizontal padding.
-
-Recommended default:
-
-```text
-16dp
-```
-
-Larger content blocks may use:
-
-```text
-20–24dp
-```
-
----
-
-# 9. Shape System
-
-Meno uses rounded shapes to reinforce the friendly visual language.
-
-## 9.1 Corner Radius
-
-Recommended values:
-
-```text
-Small:
-8dp
-
-Medium:
-12dp
-
-Large:
-16dp
-
-Extra Large:
-24dp
-
-Pill:
-50%
-```
-
-Primary cards should generally use:
-
-```text
-16–20dp
-```
-
----
-
-## 9.2 Buttons
-
-Primary buttons:
-
-```text
-Rounded
-12–16dp
-```
-
-Secondary buttons:
-
-```text
-Rounded
-12–16dp
-```
-
-Pill-shaped buttons may be used for:
-
-* Filters
-* Tags
-* XP indicators
-* Small status elements
-
----
-
-# 10. Elevation and Shadows
-
-Meno should avoid excessive material elevation.
-
-Prefer:
-
-* Subtle shadows
-* Soft borders
-* Background contrast
-* Layered cards
-
-Cards should feel separated without looking heavily raised.
-
-Example hierarchy:
-
-```text
-Background
-   ↓
-Card
-   ↓
-Primary content
-```
-
-Avoid:
-
-```text
-Heavy shadow
-+ strong border
-+ strong gradient
-+ multiple layers
-```
-
-at the same time.
-
----
-
-# 11. Illustration & Mascot System
-
-The mascot is an important part of Meno's personality.
-
-However, it should be used intentionally.
-
-## 11.1 Mascot Purpose
-
-The mascot can:
-
-* Welcome the user
-* Encourage progress
-* Celebrate completion
-* Explain empty states
-* Appear during onboarding
-* Provide emotional feedback
-
----
-
-## 11.2 Mascot Usage
-
-Good usage:
-
-```text
-Onboarding
-     ↓
-Welcome mascot
-
-Reading completion
-     ↓
-Celebration mascot
-
-Empty state
-     ↓
-Helpful mascot
-```
-
-Avoid placing the mascot:
-
-* On every screen
-* Behind important text
-* Inside every card
-* As decoration without purpose
-
----
-
-## 11.3 Mascot Personality
-
-The mascot should communicate:
-
-* Friendly
-* Encouraging
-* Curious
-* Supportive
-* Positive
-
-Avoid making the mascot:
-
-* Too childish
-* Overly exaggerated
-* Visually dominant
-* Distracting
-
----
-
-# 12. Iconography
-
-Icons should use a consistent modern icon set.
-
-Preferred characteristics:
-
-* Simple
-* Rounded
-* Recognizable
-* Minimal
-* Consistent stroke weight
-
-Icons should support text rather than replace important labels.
-
-Examples:
-
-```text
-Home
-Book
-Journey
-Progress
-Profile
-Bell
-Flame
-Star
-Check
-Arrow
-```
-
----
-
-# 13. Component System
-
-Meno should use reusable UI components.
-
-Recommended components:
-
-```text
-MenoButton
-MenoSecondaryButton
-MenoCard
-MenoProgressBar
-MenoChip
-MenoTopBar
-MenoBottomNavigation
-MenoStatCard
-MenoReadingCard
-MenoJourneyCard
-MenoMascot
-MenoSectionHeader
-MenoEmptyState
-MenoLoadingState
-MenoErrorState
-```
-
-Reusable components should be placed in:
-
-```text
-ui/components/
-```
-
----
-
-# 14. Primary Button
-
-Primary buttons represent the main action.
-
-Example:
-
-```text
+Pressed State:
 ┌─────────────────────────┐
-│      Continue Reading   │
-└─────────────────────────┘
+│     Continue Reading    │  ◄── Translates 4dp down on Y-axis
+└─────────────────────────┘      Bevel shadow compresses
 ```
 
-Characteristics:
-
-* Meno Teal background
-* High contrast text
-* Rounded corners
-* Comfortable touch target
-* Clear action-oriented label
-
-Examples:
-
-```text
-Continue Reading
-Start Journey
-Begin Reading
-Complete Reading
-Continue
-```
-
-Avoid vague labels such as:
-
-```text
-OK
-Next
-Click Here
-Submit
-```
-
-when a more meaningful action can be shown.
+When pressed, the top surface translates 4dp downward, compressing the bevel shadow to provide immediate visual feedback.
 
 ---
 
-# 15. Secondary Button
+## 9. Mascot System
 
-Secondary buttons should support the primary action.
+The Meno mascot ("Bean") provides friendly visual accompaniment across key journey touchpoints.
 
-Example:
+### Mascot States & Placements
 
-```text
-┌─────────────────────────┐
-│        View Journey     │
-└─────────────────────────┘
-```
+* **Mascot Waving**: Welcomes users on the Splash and Onboarding screens.
+* **Mascot Reading**: Appears on the Home screen dashboard when a reading is pending.
+* **Mascot Celebrating**: Appears on the Completion screen with confetti and XP rewards.
+* **Mascot Encouraging**: Accompanies empty states or returning user prompts.
 
-Visual treatment can use:
+### Usage Rules
 
-* Teal outline
-* Light teal background
-* Neutral surface
-
-Secondary buttons should not compete visually with the primary button.
+* Do **not** place the mascot on every screen.
+* Do **not** overlay the mascot on top of Scripture text.
+* Store mascot graphics locally under `assets/images/`.
 
 ---
 
-# 16. Cards
+## 10. Reusable Component Specifications
 
-Cards are used to group related information.
-
-Examples:
+All UI controls are built as reusable Flutter widgets in `lib/core/` and feature packages.
 
 ```text
-Today's Reading
-─────────────────────────
-John 1:1–18
-
-Read today's passage
-              →
-```
-
-Journey card:
-
-```text
-Gospel Starter
-─────────────────────────
-Build your reading habit
-from the beginning.
-
-████████░░  80%
-
-Continue →
-```
-
-Cards should have:
-
-* Clear title
-* Supporting information
-* Strong hierarchy
-* Appropriate padding
-* One obvious action when applicable
-
----
-
-# 17. Progress Components
-
-Progress is a core part of Meno.
-
-Possible progress representations:
-
-### Linear Progress
-
-```text
-████████░░░░
-```
-
-Used for:
-
-* Journey completion
-* Daily progress
-
-### Circular Progress
-
-Used when:
-
-* Showing percentage
-* Highlighting a single metric
-
-### Streak
-
-Example:
-
-```text
-🔥 7 day streak
-```
-
-### XP
-
-Example:
-
-```text
-⭐ 120 XP
-```
-
-Progress components should feel rewarding but not overly game-like.
-
----
-
-# 18. Gamification Design
-
-Gamification should encourage consistency rather than become the primary purpose of the application.
-
-Core mechanics:
-
-```text
-Reading
-   ↓
-Completion
-   ↓
-XP
-   ↓
-Streak
-   ↓
-Visible Progress
-   ↓
-Motivation to continue
+Component Overview:
+├── MenoButton              # Primary tactile bevel button (#006964 + #00504C bevel)
+├── MenoSecondaryButton     # Outlined / warm surface button for secondary choices
+├── MenoCard                # White/Warm surface container with 16dp radius & soft border
+├── MenoProgressBar         # Rounded linear progress bar in Primary Teal / Amber
+├── MenoChip                # Small pill badge for status, XP, or streak count
+├── MenoStatCard            # Stat box displaying XP, streak days, or readings complete
+├── MenoReadingCard         # Dashboard hero card displaying today's passage details
+├── MenoJourneyCard         # Journey selection card with progress indicator
+├── MenoMascot              # Mascot wrapper handling asset rendering and subtle scale
+├── MenoTopBar              # Custom app header bar with back navigation & route title
+├── MenoBottomNavigation    # 4-item bottom navigation bar (Home, Journey, Review, Profile)
+├── MenoEmptyState          # Friendly state widget with illustration and recovery action
+├── MenoLoadingState        # Circular progress spinner in Meno Teal with warm backdrop
+└── MenoErrorState          # Error message container with friendly retry action
 ```
 
 ---
 
-## 18.1 XP
+## 11. Core Screen Specifications
 
-XP is a lightweight reward for completing readings.
+### 11.1 Onboarding Flow
 
-Example:
+Wizard sequence introducing Meno's guided approach:
 
-```text
-+10 XP
-```
+1. **Splash**: Brand mark, mascot waving, tagline "Read. Remain. Grow."
+2. **Welcome**: Value proposition summary ("Start your Bible reading habit").
+3. **Choose Journey**: Select starting plan (e.g., *Gospel Starter*).
+4. **Daily Goal**: Select target reading pace (e.g., 5 mins / 1 chapter per day).
+5. **Reminder Setup**: Pick preferred daily notification time (e.g., 07:00 PM).
+6. **Onboarding Complete**: Final encouraging prompt leading into Home.
 
-XP can be displayed:
+### 11.2 Home Screen (Dashboard)
 
-* On completion
-* In the home screen
-* In the progress screen
-* In the profile screen
+The user's central daily hub:
 
----
+* **Top Header**: User greeting, streak counter pill (`🔥 7 Days`), XP total (`⭐ 120 XP`).
+* **Hero Card (`MenoReadingCard`)**: Highlights "Today's Reading" (e.g., *John 1:1–18*) with a prominent `Continue Reading` tactile button.
+* **Journey Snapshot**: Shows active journey progress bar (e.g., 8 / 10 readings completed).
 
-## 18.2 Streak
+### 11.3 Journey Screen
 
-Example:
+Displays the complete guided roadmap:
 
-```text
-🔥 7
-Day Streak
-```
+* Timeline of readings organized sequentially.
+* Completed readings marked with Teal checkmarks.
+* Active daily reading highlighted with Amber accent.
+* Upcoming readings shown in clean, locked/future state.
 
-The visual treatment should communicate achievement without creating pressure.
+### 11.4 Scripture Reading Screen
 
----
+Designed for maximum reading focus:
 
-## 18.3 Completion Celebration
+* **Header**: Passage title (*John 1:1–18*) and back button.
+* **Content Container**: High contrast text in **Plus Jakarta Sans**, size 17–19dp, line-height 1.6, on Warm Background (`#FBF9F6`).
+* **Bottom Action**: Fixed bottom container featuring `Complete Reading` tactile button.
+* Zero distraction: No ads, floating badges, or clutter during reading.
 
-After finishing a reading:
+### 11.5 Completion Screen
 
-```text
-        ✓
+Celebratory reward screen shown immediately upon marking a reading complete:
 
-    Reading Complete!
+* **Illustration**: Mascot celebrating graphic with optional subtle confetti.
+* **Headline**: "Reading Complete!" (Outfit Bold).
+* **Reward Badges**: `+10 XP` awarded pop-up and updated Streak count (`🔥 8 Day Streak`).
+* **Action**: `Continue` tactile button returning user to Home.
 
-      +10 XP
-    🔥 7 day streak
+### 11.6 Review / History Screen
 
-      Continue
-```
+* Displays past completed readings organized by date.
+* Allows re-reading previous passages.
 
-Optional:
+### 11.7 Profile & Settings Screens
 
-* Mascot animation
-* Small confetti
-* Scale animation
-* XP counter animation
-
-Animations should remain short and subtle.
-
----
-
-# 19. Onboarding Design
-
-The onboarding experience introduces the purpose of Meno.
-
-Goals:
-
-* Explain the application
-* Make the user feel welcomed
-* Reduce uncertainty
-* Guide the user toward their first reading
-
-Suggested structure:
-
-```text
-Welcome
-   ↓
-What is Meno?
-   ↓
-Choose Reading Journey
-   ↓
-Set Daily Goal
-   ↓
-Start Reading
-```
-
-The onboarding should not contain excessive text.
-
-Each screen should communicate one primary idea.
+* Displays summary statistics (Total XP, Longest Streak, Total Chapters Read).
+* Simple notification toggle and reminder time selector.
+* App version and educational project attribution.
 
 ---
 
-# 20. Home Screen
+## 12. Prototype Relationship
 
-The home screen is the user's main starting point.
+The HTML/Stitch prototype located under `meno.prototipe/stitch_meno_bible_habit_app/` serves strictly as a **visual and interaction reference**.
 
-Priority hierarchy:
-
-```text
-1. Today's Reading
-2. Current Streak
-3. XP / Progress
-4. Journey Progress
-5. Supporting content
-```
-
-Example structure:
-
-```text
-Good morning!
-
-🔥 7 day streak
-
-Today's Reading
-──────────────────
-John 1:1–18
-
-Read today's passage
-          →
-
-Journey
-──────────────────
-Gospel Starter
-
-████████░░
-8 / 10 readings
-```
-
-The primary reading action should be visually dominant.
+* It models screen layouts, color applications, mascot moments, and tactile button feedback.
+* The production application is built **natively using Flutter widgets** (`StatelessWidget`, `StatefulWidget`).
+* WebViews will **not** be used to display prototype HTML files.
 
 ---
 
-# 21. Journey Screen
+## 13. Flutter Theme Architecture
 
-The Journey screen shows the user's guided reading path.
-
-Example:
+Design tokens are declared in pure Dart classes and wired to Flutter's `ThemeData`:
 
 ```text
-Gospel Starter
-
-Your Journey
-
-✓ Reading 1
-✓ Reading 2
-✓ Reading 3
-● Reading 4
-○ Reading 5
-○ Reading 6
-```
-
-The current reading should have the strongest visual emphasis.
-
-Completed readings should be recognizable but visually secondary.
-
-Locked or upcoming readings should remain understandable without appearing inaccessible or frustrating.
-
----
-
-# 22. Reading Screen
-
-The reading screen prioritizes Scripture readability.
-
-Recommended structure:
-
-```text
-← John 1
-
-John 1:1–18
-
-"In the beginning..."
-
-[ Scripture Text ]
-
-────────────────────
-
-        Complete
-```
-
-Important principles:
-
-* Minimal distractions
-* Comfortable line height
-* Large enough reading text
-* Strong contrast
-* Clear progress context
-* Fixed or easily accessible completion action
-
-Avoid unnecessary gamification elements while the user is actively reading.
-
----
-
-# 23. Scripture Typography
-
-Scripture text should receive special treatment.
-
-Recommended:
-
-```text
-Font:
-Outfit Regular
-
-Size:
-17–19sp
-
-Line Height:
-1.5–1.7
-
-Paragraph Spacing:
-16–24dp
-```
-
-The exact values may be adjusted after device testing.
-
-The reading experience should prioritize comfort over compactness.
-
----
-
-# 24. Completion Screen
-
-The completion screen is an emotional reward moment.
-
-Suggested hierarchy:
-
-```text
-Mascot / Illustration
-
-Reading Complete!
-
-+10 XP
-
-🔥 7 day streak
-
-Journey Progress
-████████░░
-
-[ Continue ]
-```
-
-The screen should feel:
-
-* Rewarding
-* Warm
-* Positive
-* Brief
-
-It should not become a complex statistics dashboard.
-
----
-
-# 25. Progress Screen
-
-The Progress screen provides a simple overview of activity.
-
-Possible information:
-
-```text
-Your Progress
-
-🔥 Current Streak
-7 days
-
-⭐ Total XP
-120 XP
-
-📖 Readings Completed
-12
-
-Journey Progress
-████████░░
-80%
-```
-
-The screen should prioritize useful information over excessive metrics.
-
----
-
-# 26. Profile Screen
-
-The Profile screen contains user preferences and lightweight settings.
-
-Possible sections:
-
-```text
-Profile
-
-Reading Journey
-Gospel Starter
-
-Daily Reminder
-07:00 PM
-
-Notifications
-On
-
-About Meno
-```
-
-The MVP should avoid unnecessary profile complexity because users do not have accounts.
-
----
-
-# 27. Reminder Settings
-
-Reminder settings should be simple.
-
-Example:
-
-```text
-Daily Reading Reminder
-
-[ ON ]
-
-Reminder Time
-
-07:00 PM
-
-You will receive a reminder
-to continue your reading journey.
-```
-
-Use clear language.
-
-Avoid overly technical notification settings.
-
----
-
-# 28. Navigation Bar
-
-If bottom navigation is used, it should contain only the most important destinations.
-
-Recommended:
-
-```text
-Home
-Journey
-Progress
-Profile
-```
-
-The currently selected destination should use the primary Meno color.
-
-The navigation bar should not contain too many items.
-
----
-
-# 29. Interaction States
-
-Every interactive component should account for multiple states.
-
-### Default
-
-Normal appearance.
-
-### Pressed
-
-Slight visual feedback.
-
-### Disabled
-
-Reduced emphasis.
-
-### Loading
-
-Display progress indication.
-
-### Success
-
-Display successful completion feedback.
-
-### Error
-
-Display a clear recovery action.
-
-Example:
-
-```text
-Default
-   ↓
-Pressed
-   ↓
-Loading
-   ↓
-Success
+lib/core/theme/
+├── meno_colors.dart        # Static Color constants (#006964, #FEA619, etc.)
+├── meno_typography.dart    # TextTheme definitions pairing Outfit & Plus Jakarta Sans
+├── Supported font files:   # Google Fonts asset configuration for offline loading
+│   ├── Outfit-Bold.ttf
+│   ├── Outfit-SemiBold.ttf
+│   ├── PlusJakartaSans-Regular.ttf
+│   └── PlusJakartaSans-Medium.ttf
+└── meno_theme.dart         # Returns ThemeData configured with Meno tokens
 ```
 
 ---
 
-# 30. Loading States
+## 14. Design Acceptance Criteria
 
-Loading states should feel lightweight.
+A screen is considered visually compliant with Meno when:
 
-Avoid large blocking loading screens unless necessary.
-
-Preferred:
-
-```text
-Small progress indicator
-+
-Existing screen structure
-```
-
-Skeleton loading can be introduced later if required.
+1. It uses colors strictly from the defined Meno palette (`#006964`, `#FEA619`, `#FBF9F6`, etc.).
+2. It pairs **Outfit** for headings/numbers with **Plus Jakarta Sans** for body/reading text.
+3. Primary action buttons implement the 4dp bottom bevel (`#00504C`) tactile interaction.
+4. Screen layouts conform to the 8dp grid spacing system.
+5. Scripture reading passages maintain at least 1.5 line height and 17dp text size on warm background surfaces.
+6. Appropriate loading, empty, and error state widgets are provided.
 
 ---
 
-# 31. Empty States
-
-Empty states should explain what the user can do next.
-
-Example:
-
-```text
-No reading history yet.
-
-Complete your first reading
-to start building your progress.
-
-[ Start Reading ]
-```
-
-A mascot may be used when it helps communicate the message.
-
----
-
-# 32. Error States
-
-Errors should be friendly and actionable.
-
-Example:
-
-```text
-Something went wrong.
-
-We couldn't load this reading.
-
-[ Try Again ]
-```
-
-Avoid technical messages such as:
-
-```text
-SQLiteException
-NullPointerException
-JSON parsing error
-```
-
-in the user-facing UI.
-
----
-
-# 33. Motion & Animation
-
-Animation should reinforce interaction rather than distract from content.
-
-Recommended animation moments:
-
-* Button press
-* XP increase
-* Progress update
-* Completion
-* Mascot reaction
-* Screen transitions
-
-Recommended duration:
-
-```text
-Short:
-150–200ms
-
-Standard:
-200–300ms
-
-Celebration:
-300–600ms
-```
-
-Avoid:
-
-* Constant movement
-* Long transitions
-* Excessive bouncing
-* Animation during Scripture reading
-
----
-
-# 34. Gamification Feedback Animation
-
-A completion animation can follow:
-
-```text
-Complete
-   ↓
-Checkmark appears
-   ↓
-XP counter increases
-   ↓
-Streak updates
-   ↓
-Mascot reacts
-   ↓
-Continue button appears
-```
-
-The sequence should be quick enough that the user can continue without waiting.
-
----
-
-# 35. Accessibility
-
-Meno should remain usable for a wide range of users.
-
-### Requirements
-
-* Sufficient color contrast
-* Readable text sizes
-* Adequate touch targets
-* Content descriptions for meaningful icons
-* Avoid relying only on color
-* Support system font scaling where practical
-* Avoid overly dense layouts
-
-Interactive elements should generally provide a comfortable touch target.
-
----
-
-# 36. Responsive & Adaptive Layout
-
-Although Meno is primarily designed for phones, layouts should avoid assuming one exact screen size.
-
-The UI should adapt to:
-
-* Small phones
-* Standard phones
-* Large phones
-* Landscape where applicable
-* Accessibility font scaling
-
-Content should use:
-
-* Flexible width
-* Scrollable containers
-* Adaptive spacing
-* Responsive components
-
-Avoid hardcoding large fixed dimensions where possible.
-
----
-
-# 37. Design Tokens
-
-The design system should centralize reusable visual values.
-
-Example:
-
-```kotlin
-object MenoColors {
-    val Primary = Color(0xFF006964)
-    val Secondary = Color(0xFF10847E)
-    val Accent = Color(0xFFFEA619)
-    val Background = Color(0xFFFFFDF8)
-    val TextPrimary = Color(0xFF1F2937)
-    val TextSecondary = Color(0xFF667085)
-}
-```
-
-Spacing:
-
-```kotlin
-object MenoSpacing {
-    val XS = 4.dp
-    val SM = 8.dp
-    val MD = 16.dp
-    val LG = 24.dp
-    val XL = 32.dp
-}
-```
-
-Corner radius:
-
-```kotlin
-object MenoShapes {
-    val Small = 8.dp
-    val Medium = 12.dp
-    val Large = 16.dp
-    val ExtraLarge = 24.dp
-}
-```
-
-The exact implementation can be adjusted to fit the project's Compose theme structure.
-
----
-
-# 38. Jetpack Compose Mapping
-
-The design system should map directly to reusable Compose components.
-
-Example:
-
-```text
-Design System
-      ↓
-Compose Theme
-      ↓
-Reusable Components
-      ↓
-Screen UI
-```
-
-Suggested structure:
-
-```text
-ui/
-├── components/
-│   ├── MenoButton.kt
-│   ├── MenoCard.kt
-│   ├── MenoProgressBar.kt
-│   ├── MenoStatCard.kt
-│   ├── MenoReadingCard.kt
-│   └── MenoMascot.kt
-│
-└── theme/
-    ├── Color.kt
-    ├── Type.kt
-    ├── Shape.kt
-    └── Theme.kt
-```
-
----
-
-# 39. Design-to-Architecture Relationship
-
-The design system should align with the application architecture.
-
-```text
-┌─────────────────────────────────┐
-│           Design System         │
-│                                 │
-│ Colors                          │
-│ Typography                     │
-│ Shapes                         │
-│ Components                     │
-└───────────────┬─────────────────┘
-                │
-                ▼
-┌─────────────────────────────────┐
-│        Presentation Layer       │
-│                                 │
-│ Compose Screens                 │
-│ ViewModels                      │
-│ UI State                        │
-└───────────────┬─────────────────┘
-                │
-                ▼
-┌─────────────────────────────────┐
-│         Domain + Data           │
-│                                 │
-│ Business Logic                  │
-│ Progress                        │
-│ Scripture                       │
-│ Persistence                     │
-└─────────────────────────────────┘
-```
-
-Design decisions should not introduce unnecessary changes to the underlying application architecture.
-
----
-
-# 40. Visual Hierarchy
-
-Every screen should establish a clear hierarchy.
-
-Recommended order:
-
-```text
-Primary Information
-        ↓
-Primary Action
-        ↓
-Supporting Information
-        ↓
-Secondary Actions
-```
-
-Example Home screen:
-
-```text
-Today's Reading
-        ↓
-Read Today's Passage
-        ↓
-Streak / XP
-        ↓
-Journey Progress
-```
-
-This prevents screens from becoming visually noisy.
-
----
-
-# 41. Content & Microcopy
-
-Meno's language should be:
-
-* Short
-* Friendly
-* Encouraging
-* Clear
-* Human
-
-Prefer:
-
-```text
-Keep going!
-You're building a habit.
-
-Ready for today's reading?
-
-You've got this.
-
-Reading complete!
-```
-
-Avoid overly formal language:
-
-```text
-Your Scripture reading task
-has been successfully completed.
-```
-
-The application should feel like a supportive companion rather than an instructor.
-
----
-
-# 42. Microcopy for Gamification
-
-XP:
-
-```text
-+10 XP
-```
-
-Streak:
-
-```text
-🔥 7 day streak
-```
-
-Completion:
-
-```text
-Reading complete!
-```
-
-Progress:
-
-```text
-You're 80% through this journey.
-```
-
-Encouragement:
-
-```text
-Keep going!
-One reading at a time.
-```
-
-Avoid excessive motivational messages on every interaction.
-
----
-
-# 43. Do & Don't
-
-## Do
-
-* Use rounded cards
-* Use consistent spacing
-* Use teal as the main brand color
-* Use orange as an accent
-* Use mascot moments intentionally
-* Make progress visible
-* Keep Scripture highly readable
-* Use friendly microcopy
-* Keep primary actions obvious
-* Maintain visual consistency
-
-## Don't
-
-* Use too many colors
-* Put the mascot everywhere
-* Make every screen highly animated
-* Overuse gradients
-* Make the app look like a children's game
-* Make the reading screen visually noisy
-* Use excessive shadows
-* Create unnecessary dashboards
-* Use tiny text
-* Add unnecessary UI elements
-
----
-
-# 44. MVP Design Scope
-
-The MVP design includes:
-
-```text
-✓ Brand identity
-✓ Color system
-✓ Typography
-✓ Design tokens
-✓ Onboarding
-✓ Home
-✓ Journey
-✓ Reading
-✓ Completion
-✓ Progress
-✓ Profile
-✓ Reminder settings
-✓ Mascot system
-✓ Gamification components
-✓ Navigation
-✓ Loading states
-✓ Empty states
-✓ Error states
-✓ Accessibility foundation
-```
-
----
-
-# 45. Future Design Expansion
-
-Potential future additions:
-
-```text
-Advanced statistics
-Achievements
-Badges
-Multiple journeys
-Multiple Scripture translations
-Bookmarks
-Highlights
-Notes
-Social features
-Leaderboards
-Profile customization
-Themes
-Dark mode
-```
-
-These should only be added when they provide meaningful value.
-
----
-
-# 46. Source of Truth
-
-The following hierarchy should be used when implementing the design:
-
-```text
-1. Meno Design System
-        ↓
-2. Reusable Compose Components
-        ↓
-3. Screen Specifications
-        ↓
-4. Individual Screen Implementation
-```
-
-If a screen conflicts with the design system, the reusable design system should generally take priority.
-
----
-
-# 47. Design Acceptance Criteria
-
-A screen is considered visually aligned with Meno when:
-
-* It uses the Meno color system.
-* It uses the defined typography hierarchy.
-* It follows the spacing system.
-* It uses consistent corner radii.
-* It has a clear primary action.
-* It maintains readable visual hierarchy.
-* It does not introduce unnecessary colors.
-* It does not overuse illustrations.
-* It supports appropriate loading/error/empty states.
-* It remains consistent with the welcoming but mature personality.
-
----
-
-# 48. Final Design Direction
-
-Meno should ultimately feel like:
-
-> **A welcoming reading companion that makes building a Bible reading habit feel simple, rewarding, and enjoyable.**
-
-The visual experience should combine:
-
-```text
-Modern UI
-     +
-Friendly Illustration
-     +
-Light Gamification
-     +
-Strong Readability
-     +
-Calm Spiritual Atmosphere
-```
-
-The target feeling is:
-
-```text
-"I want to come back tomorrow."
-```
-
-rather than:
-
-```text
-"I have to complete a task."
-```
-
-Meno should encourage consistency through positive reinforcement, visible progress, and a warm visual identity while keeping Scripture reading itself calm and distraction-free.
-
----
-
-## End
-
-```
-```
+## End of Design System Specification
